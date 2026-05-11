@@ -6,7 +6,7 @@ SIM ?= icarus
 FST ?= -fst # Use more efficient FST format
 TOPLEVEL_LANG ?= verilog
 SRC_DIR = $(PWD)/../src
-PROJECT_SOURCES = movingscreen.v hvsync_generator.v
+PROJECT_SOURCES = distributedpong.v hvsync_generator.v uart.v config.vh
 
 ifneq ($(GATES),yes)
 

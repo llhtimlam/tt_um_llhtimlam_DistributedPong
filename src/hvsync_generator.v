@@ -1,5 +1,6 @@
 `ifndef HVSYNC_GENERATOR_H
 `define HVSYNC_GENERATOR_H
+`include "config.vh"
 
 /*
 Video sync generator, used to drive a VGA monitor.
@@ -20,12 +21,12 @@ module hvsync_generator(clk, reset, hsync, vsync, display_on, hpos, vpos);
 
   // declarations for TV-simulator sync parameters
   // horizontal constants
-  parameter H_DISPLAY       = 640; // horizontal display width
+  parameter H_DISPLAY       = `H_DISPLAY; // horizontal display width
   parameter H_BACK          =  48; // horizontal left border (back porch)
   parameter H_FRONT         =  16; // horizontal right border (front porch)
   parameter H_SYNC          =  96; // horizontal sync width
   // vertical constants
-  parameter V_DISPLAY       = 480; // vertical display height
+  parameter V_DISPLAY       = `V_DISPLAY; // vertical display height
   parameter V_TOP           =  33; // vertical top border
   parameter V_BOTTOM        =  10; // vertical bottom border
   parameter V_SYNC          =   2; // vertical sync # lines
