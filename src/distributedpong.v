@@ -125,7 +125,7 @@ module tt_um_llhtimlam_DistributedPong (
 
   // Tx ball transmission (clk domain)
   always @(posedge clk or negedge rst_n) begin
-    if (!rst_n || !booted) begin
+    if (!rst_n) begin
       tx_small_rst    <= 1'b0;
       send_packet_reg <= 1'b0;
       packet_cmd      <= 4'd0;
@@ -193,7 +193,7 @@ module tt_um_llhtimlam_DistributedPong (
   wire send_ack_packet = (ack_prev && !ack && !send_packet_reg); // trigger acknowledgement command
 
   always @(posedge clk or negedge rst_n) begin
-    if (!rst_n || !booted) begin
+    if (!rst_n) begin
       ack           <= 1'b0;
       ball_tx_ready <= 1'b1;
       ball_rx_valid <= 1'b0;
@@ -259,7 +259,7 @@ module tt_um_llhtimlam_DistributedPong (
   wire ball_gone  = (gone_timer == 4'd15);
   wire ball_dup   = (dup_timer == 4'd15);
   always @(posedge clk or negedge rst_n) begin
-    if (!rst_n || !booted) begin
+    if (!rst_n) begin
       gone_timer <= 4'd0;
     end else if (has_ball || has_ball_rx_sync[1]) begin
       gone_timer <= 4'd0;
@@ -269,7 +269,7 @@ module tt_um_llhtimlam_DistributedPong (
   end
   
   always @(posedge clk or negedge rst_n) begin
-    if (!rst_n || !booted) begin
+    if (!rst_n) begin
       dup_timer <= 4'd0;
     end else if (game_tick) begin
       if (has_ball && has_ball_rx_sync[1]) begin
