@@ -153,7 +153,7 @@ module packet_sender (
   reg start_ff;   // edge detect
 
   // Edge detection for start (ensure single-cycle pulse)
-  wire start_rising = start && !start_ff;
+  // wire start_rising = start && !start_ff;
   always @(posedge clk or negedge rst_n) begin
     if (!rst_n) start_ff <= 1'b0;
     else start_ff <= start;

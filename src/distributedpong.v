@@ -497,6 +497,11 @@ module tt_um_llhtimlam_DistributedPong (
   assign sdl_g  = pixel ? 8'hFF : 8'h00;
   assign sdl_b  = pixel ? 8'hFF : 8'h00;
 
-  wire _unused = &{1'b0, ui_in[6:2], ena, 1'b0};
+wire _unused_ok = &{1'b0, 
+    start_rising, paddle_x, spawn_sync,      // Internal wires
+    rx_packet_bytes[39:36], rx_packet_bytes[3:0], // Packet bits
+    send_packet, MAX_BYTES,                  // Signal and Parameter
+    sdl_sx, sdl_sy, sdl_de, sdl_r, sdl_g, sdl_b, sdl_b, uio_in[6], uio_in[4:2], uio_in[0], // VGA and IO bits
+    1'b0};
 
 endmodule
