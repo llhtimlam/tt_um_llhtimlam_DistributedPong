@@ -177,7 +177,7 @@ module packet_sender (
           end
         end
         1: begin  // send current byte
-            tx_data = packet_bytes[byte_cnt*8 +: 8]; // index slicing
+            tx_data <= packet_bytes[byte_cnt*8 +: 8]; // index slicing
             tx_send <= 1'b1;  // Pulse(1) trigger uart_tx
             state <= 2'd2;    // Wait for TX to start
         end

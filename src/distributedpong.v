@@ -37,13 +37,20 @@ module tt_um_llhtimlam_DistributedPong (
 
   // Bidirectional UART Configuration
   wire uart_tx, uart_rx, has_ball_rx, insync_rx;
-  //assign uio_oe     = 8'b01010101;  // odd pins output (TX), even pins input (RX)
+  assign uio_oe     = 8'b01011101;  // [NOT INDEX] odd pins output (TX), even pins input (RX), value 1: Output 0: Input
   assign uio_out[0] = uart_tx;
   assign uart_rx    = uio_in[1];
   assign uio_out[4] = has_ball;
   assign has_ball_rx  = uio_in[5];
   assign uio_out[6] = 1'b1;         // insync_tx
   assign insync_rx  = uio_in[7];
+  
+  // Drive input pin 2 6 8 output low
+  assign uio_out[1] = 1'b0;
+  assign uio_out[5] = 1'b0;
+  assign uio_out[7] = 1'b0;
+  // Pin 34 is not used as logic is not implemented, set output and drive low
+  assign uio_out[3:2] = 2'b00
   
   // Graphic Generator
   wire        display_on;
