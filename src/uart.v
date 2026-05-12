@@ -155,7 +155,7 @@ module packet_sender (
   output reg        tx_send,          // pulse uart_tx(.send) 
   output reg [7:0] tx_data,          // bitstream uart_tx(.data)
   input  wire       tx_busy,          // status uart_tx(.busy)
-  output reg        busy,              // 1 while sending, 0 when idle
+  output reg        busy              // 1 while sending, 0 when idle
 );
 
   reg [1:0] state;
