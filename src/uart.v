@@ -1,4 +1,3 @@
-`include "config.vh"
 
 `default_nettype none
 

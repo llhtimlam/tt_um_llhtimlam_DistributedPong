@@ -5,11 +5,6 @@
 
 `default_nettype none
 
-// Include configuration for baud rate
-`include "config.vh"
-`include "hvsync_generator.v"
-`include "uart.v"
-
 module tt_um_llhtimlam_DistributedPong (
   input  wire [7:0] ui_in,    // Dedicated inputs: Paddle up(0), down(1), identity(7)
   output wire [7:0] uo_out,   // Dedicated outputs: TinyVGA: R1,G1,B1,vsync,R0,G0,B0,hsync
