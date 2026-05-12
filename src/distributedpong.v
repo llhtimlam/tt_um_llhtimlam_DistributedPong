@@ -169,16 +169,15 @@ module tt_um_llhtimlam_DistributedPong (
           packet_3    <= {ball_y[3:0], vel_x};
           packet_4    <= {vel_y, 4'b0};
         end
+      if (ball_tx_ready) begin
+        tx_small_rst    <= 1'b1;
+        send_packet_reg <= 1'b0;
+        packet_cmd      <= 4'd0;
+        packet_1        <= 8'd0;
+        packet_2        <= 8'd0;
+        packet_3        <= 8'd0;
+        packet_4        <= 8'd0;
       end
-    end
-    if (ball_tx_ready) begin
-      tx_small_rst    <= 1'b1;
-      send_packet_reg <= 1'b0;
-      packet_cmd      <= 4'd0;
-      packet_1        <= 8'd0;
-      packet_2        <= 8'd0;
-      packet_3        <= 8'd0;
-      packet_4        <= 8'd0;
     end
   end
 
@@ -261,23 +260,18 @@ module tt_um_llhtimlam_DistributedPong (
   always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
       gone_timer <= 4'd0;
-    end else if (has_ball || has_ball_rx_sync[1]) begin
-      gone_timer <= 4'd0;
-    end else if (game_tick && gone_timer < 4'd15) begin
-      gone_timer <= gone_timer + 1'd1;
-    end
-  end
-  
-  always @(posedge clk or negedge rst_n) begin
-    if (!rst_n) begin
-      dup_timer <= 4'd0;
-    end else if (game_tick) begin
-      if (has_ball && has_ball_rx_sync[1]) begin
-        if (dup_timer < 4'd15)
-          dup_timer <= dup_timer + 1'b1;
-      end else begin
+      dup_timer  <= 4'd0;
+    end else if (!pause && game_tick) begin
+      // gone timer
+      if (has_ball || has_ball_router)
+        gone_timer <= 4'd0;
+      else if (gone_timer < 4'd15)
+        gone_timer <= gone_timer + 1'd1;
+      // duplicated timer (both sides have ball)
+      if (has_ball && has_ball_router) begin
+        if (dup_timer < 4'd15) dup_timer <= dup_timer + 1'b1;
+      end else
         dup_timer <= 4'd0;
-      end
     end
   end
 
