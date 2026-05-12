@@ -86,7 +86,7 @@ module tt_um_llhtimlam_DistributedPong (
   wire send_packet;
   wire packet_busy;
 
-  wire [7:0] tx_packet_bytes [0:6];
+  wire [55:0] tx_packet_bytes; // 7 byte total length
   wire [7:0] tx_data;
   
   packet_sender packet_sender_inst (
@@ -98,7 +98,7 @@ module tt_um_llhtimlam_DistributedPong (
   );
 
   wire rx_packet_ready;
-  wire [7:0] rx_packet_bytes [0:4];
+  wire [39:0] rx_packet_bytes; // 5 byte total length
 
   packet_receiver packet_receiver_inst (
     .clk(clk), .rst_n(rst_n),
@@ -117,13 +117,13 @@ module tt_um_llhtimlam_DistributedPong (
   // Assemble packet bytes (start, cmd, data, checksum)
   wire [7:0] tx_header = {packet_cmd, 3'b0, id};
   wire [7:0] tx_checksum = tx_header ^ packet_1 ^ packet_2 ^ packet_3 ^ packet_4;
-  assign tx_packet_bytes[0] = send_packet_reg ? 8'h55 : 8'h00; // start
-  assign tx_packet_bytes[1] = tx_header;  // Command(4) + ID(4)
-  assign tx_packet_bytes[2] = packet_1;
-  assign tx_packet_bytes[3] = packet_2;
-  assign tx_packet_bytes[4] = packet_3;
-  assign tx_packet_bytes[5] = packet_4;
-  assign tx_packet_bytes[6] = tx_checksum; // XOR checksum (8)
+  assign tx_packet_bytes[0  +: 8] = send_packet_reg ? 8'h55 : 8'h00; // start
+  assign tx_packet_bytes[8  +: 8] = tx_header;  // Command(4) + ID(4)
+  assign tx_packet_bytes[16 +: 8] = packet_1;
+  assign tx_packet_bytes[24 +: 8] = packet_2;
+  assign tx_packet_bytes[32 +: 8] = packet_3;
+  assign tx_packet_bytes[40 +: 8] = packet_4;
+  assign tx_packet_bytes[48 +: 8] = tx_checksum; // XOR checksum (8)
 
   // Tx ball transmission (clk domain)
   always @(posedge clk or negedge rst_n) begin
@@ -203,20 +203,20 @@ module tt_um_llhtimlam_DistributedPong (
     end else begin
       // Decode rx_packet
       if (rx_packet_ready) begin
-        case (rx_packet_bytes[0][7:4])
+        case (rx_packet_bytes[7:4])
           // Ball Transmission
           4'h9: begin // Ball transmission command
             if (!has_ball && !ball_rx_valid) begin
-              rx_ball_x     <= {rx_packet_bytes[1], rx_packet_bytes[2][7:6]};
-              rx_ball_y     <= {rx_packet_bytes[2][5:0], rx_packet_bytes[3][7:4]};
-              rx_ball_vel_x <= {rx_packet_bytes[3][3:0]};
-              rx_ball_vel_y <= {rx_packet_bytes[4][7:4]};
+              rx_ball_x     <= {rx_packet_bytes[8 +: 8],  rx_packet_bytes[16 +: 2]};
+              rx_ball_y     <= {rx_packet_bytes[18 +: 6], rx_packet_bytes[24 +: 4]};
+              rx_ball_vel_x <= rx_packet_bytes[28 +: 4];
+              rx_ball_vel_y <= rx_packet_bytes[32 +: 4];
               ball_rx_valid <= 1'b1;
               ack           <= 1'b1;
             end
           end
           4'hF: begin // Acknowledgement command
-            case (rx_packet_bytes[1][7:4])
+            case (rx_packet_bytes[8 + 7 : 8 + 4])
               4'h9: begin // Ball transmission acknowledgement
                 ball_tx_ready <= 1'b1;
                 ball_del_req  <= 1'b1;

@@ -151,7 +151,7 @@ tx_packet[5] = tx_packet[1] ^ tx_packet[2] ^ tx_packet[3] ^ tx_packet[4];
 module packet_sender (
   input  wire       clk, rst_n,
   input  wire       start,            // pulse(1) to send packet
-  input  wire [7:0] packet_bytes [0:6], // packet to send
+  input  wire [55:0] packet_bytes,    // packet to send
   output reg        tx_send,          // pulse uart_tx(.send) 
   output reg [7:0] tx_data,          // bitstream uart_tx(.data)
   input  wire       tx_busy,          // status uart_tx(.busy)
@@ -190,7 +190,7 @@ module packet_sender (
           end
         end
         1: begin  // send current byte
-            tx_data = packet_bytes[byte_cnt];
+            tx_data = packet_bytes[byte_cnt*8 +: 8]; // index slicing
             tx_send <= 1'b1;  // Pulse(1) trigger uart_tx
             state <= 2'd2;    // Wait for TX to start
         end
@@ -220,7 +220,7 @@ endmodule
 
 module packet_receiver (
   input  wire           clk, rst_n,
-  output reg  [7:0]     packet_bytes [0:4],
+  output reg  [39:0]     packet_bytes,
   input  wire           rx_ready,     // pulse uart_rx(.ready) after reading byte
   input  wire [7:0]     rx_data,      // bitstream uart_rx(.data)
   output reg            ready        // pulse(1) done reading packet
@@ -250,7 +250,7 @@ module packet_receiver (
             end
           end
           1: begin // Message Byte
-            packet_bytes[byte_cnt] <= rx_data;
+            packet_bytes[byte_cnt*8 +: 8] <= rx_data; // index slicing
             running_ecc <= running_ecc ^ rx_data;
             if (byte_cnt == 4)
               state <= 2'd2;
