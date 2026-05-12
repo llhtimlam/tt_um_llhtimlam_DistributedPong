@@ -264,12 +264,12 @@ module tt_um_llhtimlam_DistributedPong (
       dup_timer  <= 4'd0;
     end else if (!pause && game_tick) begin
       // gone timer
-      if (has_ball || has_ball_router)
+      if (has_ball || has_ball_rx)
         gone_timer <= 4'd0;
       else if (gone_timer < 4'd15)
         gone_timer <= gone_timer + 1'd1;
       // duplicated timer (both sides have ball)
-      if (has_ball && has_ball_router) begin
+      if (has_ball && has_ball_rx) begin
         if (dup_timer < 4'd15) dup_timer <= dup_timer + 1'b1;
       end else
         dup_timer <= 4'd0;
