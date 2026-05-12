@@ -135,19 +135,6 @@ module uart_rx (
   end
 endmodule
 
-
-reg [7:0] tx_packet[0:5];
-// Byte 0: start
-tx_packet[0] = 8'h55;
-// Bytes 1..4: your data (e.g., function+id, X, Y, velocity)
-tx_packet[1] = {cmd, id};
-tx_packet[2] = x_low;
-tx_packet[3] = {x_high, y_high, vx};
-tx_packet[4] = y_low;
-// Byte 5: checksum (XOR of bytes 1..4)
-tx_packet[5] = tx_packet[1] ^ tx_packet[2] ^ tx_packet[3] ^ tx_packet[4];
-
-
 module packet_sender (
   input  wire       clk, rst_n,
   input  wire       start,            // pulse(1) to send packet
