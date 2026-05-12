@@ -190,7 +190,7 @@ module packet_sender (
         3: begin  // wait for UART to finish (tx_busy=0)
           if (!tx_busy) begin          // Wait for TX to finish, proceed next byte after sent and idle
             //timeout <= 4'd0; // Reset timeout after send
-            if (byte_cnt == MAX_BYTES - 3'd1) begin // Reset when last byte
+            if (byte_cnt == 6) begin // Reset when last byte  // Start(1) + Data(5) + ECC(1) - index shift
               state <= 2'd0;
               busy <= 1'b0;
             // Progress to next byte
@@ -239,7 +239,7 @@ module packet_receiver (
           1: begin // Message Byte
             packet_bytes[byte_cnt*8 +: 8] <= rx_data; // index slicing
             running_ecc <= running_ecc ^ rx_data;
-            if (byte_cnt == 4)
+            if (byte_cnt == 4) // 5 Data Byte
               state <= 2'd2;
             else
               byte_cnt <= byte_cnt + 3'd1;
