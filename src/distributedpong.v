@@ -1,9 +1,12 @@
 /*
  * Copyright (c) 2026 Tim Lam
  * SPDX-License-Identifier: Apache-2.0
+*/
 
 `default_nettype none
 `include "config.vh"
+`include "hvsync_generator.v"
+`include "uart.v"
 
 /* verilator lint_off UNUSEDSIGNAL */
 
@@ -16,8 +19,15 @@ module tt_um_llhtimlam_DistributedPong (
   input  wire       ena,      // always 1 when the design is powered, so you can ignore it
   input  wire       clk,      // clock
   input  wire       rst_n     // reset_n - low to reset
+  // VGA screen output (for external DAC / monitor)
+  //output wire [9:0] sdl_sx,
+  //output wire [9:0] sdl_sy,
+  //output wire       sdl_de,
+  //output wire [7:0] sdl_r,
+  //output wire [7:0] sdl_g,
+  //output wire [7:0] sdl_b
 );
-
+  
   // Input Mapping
   wire move_up, move_down, id;
   assign move_up    = ui_in[0];
@@ -205,10 +215,10 @@ module tt_um_llhtimlam_DistributedPong (
           // Ball Transmission
           4'h9: begin // Ball transmission command
             if (!has_ball && !ball_rx_valid) begin
-              rx_ball_x     <= {rx_packet_bytes[8 +: 8],  rx_packet_bytes[16 +: 2]};
-              rx_ball_y     <= {rx_packet_bytes[18 +: 6], rx_packet_bytes[24 +: 4]};
-              rx_ball_vel_x <= rx_packet_bytes[28 +: 4];
-              rx_ball_vel_y <= rx_packet_bytes[32 +: 4];
+              rx_ball_x     <= {rx_packet_bytes[8 +: 8],  rx_packet_bytes[22 +: 2]}; // {packet_1, packet_2[7:6]}
+              rx_ball_y     <= {rx_packet_bytes[16 +: 6], rx_packet_bytes[28 +: 4]}; // {packet_2[5:0], packet_3[7:4]}
+              rx_ball_vel_x <= rx_packet_bytes[24 +: 4];                             // packet_3[3:0]
+              rx_ball_vel_y <= rx_packet_bytes[36 +: 4];                             // packet_4[7:4]
               ball_rx_valid <= 1'b1;
               ack           <= 1'b1;
             end
@@ -298,20 +308,6 @@ module tt_um_llhtimlam_DistributedPong (
   reg signed [3:0] vel_x, vel_y; // +7~-8
   reg [9:0] paddle_y;       // 0~1023
   
-  // Advanced Collision Check
-  /*
-  // integer r;
-  //always @(*) begin
-  //    for (r = 0; r < 12; r = r + 1) begin
-  //        ball_slice[r] = current_ball_mask[r*12 + col_idx];
-  //    end
-  //end
-  // wire [SIZE:0] ball_slice = get_ball_slice(ball_col);
-  // wire [SIZE:0] paddle_slice = get_paddle_slice(paddle_col);
-  // wire [SIZE:0] shifted_paddle = paddle_slice >> (ball_y - paddle_y);
-  // wire collision = |(ball_slice & shifted_paddle);
-  */
-  
   // Paddle movement
   always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
@@ -333,9 +329,9 @@ module tt_um_llhtimlam_DistributedPong (
       ball_tx_valid     <= 1'b0;
       ball_rx_ack       <= 1'b0;
       ball_del_act      <= 1'b0;
-      ball_x            <= 10'd240;
-      ball_y            <= 10'd120;
-      vel_x             <= 4'sd3;
+      ball_x            <= 10'd480;
+      ball_y            <= 10'd160;
+      vel_x             <= -4'sd3;
       vel_y             <= 4'sd2;
       tx_cd             <= 4'd0;
       bounce_cd         <= 2'd0;
@@ -387,9 +383,9 @@ module tt_um_llhtimlam_DistributedPong (
             else if ((ball_gone || game_launch) && !id) begin // Initial or Ball disappear
               game_launch   <= 1'b0;
               has_ball      <= 1'b1;
-              ball_x        <= 10'd200;
-              ball_y        <= 10'd150;
-              vel_x         <= 4'sd7;
+              ball_x        <= 10'd480;
+              ball_y        <= 10'd160;
+              vel_x         <= -4'sd3;
               vel_y         <= 4'sd2;
               ball_del_act  <= 1'b0;
             end
@@ -420,9 +416,9 @@ module tt_um_llhtimlam_DistributedPong (
                   else begin
                     // Paddle collision
                     if (collision_paddle_l) begin
-                      ball_x <= 10'd330;
+                      ball_x <= 10'd310;
                     end else begin
-                      ball_x <= 10'd350;
+                      ball_x <= 10'd330;
                     end
                   end
                 end else begin
@@ -437,9 +433,9 @@ module tt_um_llhtimlam_DistributedPong (
                     vel_y <= -vel_y;
                     ball_y <= 10'd15;
                     bounce_cd <= 2'd3;
-                  end else if (ball_y >= 10'd630 && !vel_y[3]) begin // Bottom wall
+                  end else if (ball_y >= 10'd465 && !vel_y[3]) begin // Bottom wall
                     vel_y <= -vel_y;
-                    ball_y <= 10'd625;
+                    ball_y <= 10'd465;
                     bounce_cd <= 2'd3;
                   end
                 end
@@ -479,12 +475,12 @@ module tt_um_llhtimlam_DistributedPong (
   assign vga_b0 = pixel;
 
   // VGA screen output (for external DAC / monitor)
-  // assign sdl_sx = hpos;
-  // assign sdl_sy = vpos;
-  // assign sdl_de = display_on;
-  // assign sdl_r  = pixel ? 8'hFF : 8'h00;
-  // assign sdl_g  = pixel ? 8'hFF : 8'h00;
-  // assign sdl_b  = pixel ? 8'hFF : 8'h00;
+  //assign sdl_sx = hpos;
+  //assign sdl_sy = vpos;
+  //assign sdl_de = display_on;
+  //assign sdl_r  = pixel ? 8'hFF : 8'h00;
+  //assign sdl_g  = pixel ? 8'hFF : 8'h00;
+  //assign sdl_b  = pixel ? 8'hFF : 8'h00;
 
   wire _unused = &{ena, 
                  rx_packet_bytes[39:36], rx_packet_bytes[3:0],

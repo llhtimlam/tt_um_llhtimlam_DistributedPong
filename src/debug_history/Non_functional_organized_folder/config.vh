@@ -1,0 +1,59 @@
+// config.vh
+`ifndef CONFIG_VH
+`define CONFIG_VH
+
+// Game tick
+`define CLK_FREQ 25000000
+
+// Display
+`define H_DISPLAY 640
+`define V_DISPLAY 480
+
+// Position
+`define PADDLE_X 320
+
+// Size
+`define PADDLE_W 10
+`define PADDLE_H 60
+
+`define BALL_SIZE 8
+
+// Half Size
+`define PADDLE_HALF_HEIGHT (`PADDLE_H/2)
+`define BALL_RADIUS (`BALL_SIZE/2)
+
+// Hitbox
+`define HIT_WINDOW 10
+
+`define RIGHT_HIT_WINDOW (`H_DISPLAY - `HIT_WINDOW)
+`define BOTTOM_HIT_WINDOW (`V_DISPLAY - `HIT_WINDOW)
+
+// Bounce Physics
+`define BALL_BOTTOM_SPAWN_Y (`BOTTOM_HIT_WINDOW - `BALL_RADIUS - 1)
+`define BALL_TOP_SPAWN_Y (`HIT_WINDOW + `BALL_RADIUS + 1)
+
+// Paddle collision edges
+`define PADDLE_LEFT_EDGE (`PADDLE_X - `PADDLE_W/2)
+`define PADDLE_RIGHT_EDGE (`PADDLE_X + `PADDLE_W/2)
+`define PADDLE_LEFT_SPAWN_X (`PADDLE_LEFT_EDGE - `BALL_RADIUS - 1)
+`define PADDLE_RIGHT_SPAWN_X (`PADDLE_RIGHT_EDGE + `BALL_RADIUS + 1)
+`define PADDLE_LEFT_HIT_X (`PADDLE_LEFT_EDGE - `HIT_WINDOW)
+`define PADDLE_RIGHT_HIT_X (`PADDLE_RIGHT_EDGE + `HIT_WINDOW)
+
+// Boundaries
+`define PADDLE_LOWER_BOUND (`V_DISPLAY - `PADDLE_HALF_HEIGHT - 1)
+`define PADDLE_UPPER_BOUND (`PADDLE_HALF_HEIGHT + 2)
+`define BALL_LOWER_BOUND (`V_DISPLAY - `BALL_RADIUS - 1)
+`define BALL_UPPER_BOUND (`BALL_RADIUS + 1)
+`define RIGHT_EDGE (`H_DISPLAY + `HIT_WINDOW)
+
+// Network communication
+`define BAUD_RATE 9600
+
+// Helper Math
+`define BAUD_TICK 2604
+// Disabled: `define BAUD_TICK (`CLK_FREQ / `BAUD_RATE)
+`define HALF_BAUD_TICK (`BAUD_TICK / 2)
+`define BAUD_COUNTER (`BAUD_TICK - 1)
+
+`endif
