@@ -4,8 +4,9 @@
 
 ### Just watch it in action!
 
-<video src="src/debug_history/checkpoint5_unstable_teleport_after_3/checkpoint5.mp4" controls width="100%">
+<video src="src/debug_history/checkpoint5_unstable_teleport_after_3/checkpoint5.mp4" controls="controls" width="100%">
 </video>
+[Watch Game Demo](src/debug_history/checkpoint5_unstable_teleport_after_3/checkpoint5.mp4)
 
 ### Two chips. One game. No seams.
 
@@ -96,7 +97,7 @@ The [Tiny Tapeout](https://tinytapeout.com/) workshop showed that anyone can des
 
 For the sake of the author's bigger end goal:
 
->**Project Yeouibu**
+>**Project Yeouibu** - a magical charm inscribed with words that manifest your intentions into physical reality, operating exactly like human-commanded semiconductor technology.
 >
 >* Building a world-class semiconductor empire in the most underrated smartest city in the world, Waterloo Canada
 >
@@ -322,8 +323,9 @@ This design takes a completely different approach. It uses **evanescent coupling
 
 > [Full video of Evanscent coupling between straight waveguide and a microring resonator](https://www.youtube.com/watch?v=_OlW0hP9rX8) [16]
 
-<video src="1StraightWaveguide1MRR.mp4" controls width="100%">
+<video src="1StraightWaveguide1MRR.mp4" controls="controls" width="100%">
 </video>
+[Watch Video](1StraightWaveguide1MRR.mp4)
 
 > Resonance between straight waveguide and a microring resonator, video [source](https://www.comsol.com/blogs/calculating-the-spectral-properties-of-an-optical-ring-resonator) [17]
 
@@ -345,8 +347,9 @@ This is the breakthrough that enables sub‑TeraHz modulation.
 Instead of embedding lasers on-chip, a single external frequency comb produces many wavelengths simultaneously. Here is how it works.
 
 
-<video src="MicroringResonatorVideo.mp4" controls width="100%">
+<video src="MicroringResonatorVideo.mp4" controls="controls" width="100%">
 </video>
+[Watch Video](MicroringResonatorVideo.mp4)
 
 > Laser injection to chip scale MRR, video [source](https://actu.epfl.ch/news/a-micro-ring-resonator-with-big-potential-5/) [22]
 
@@ -398,9 +401,9 @@ A vertically integrated **Electronic‑Photonic Integrated Circuit (EPIC)** fab 
 
 ### A Word from the Author
 
-The author has been working on this project alone and has run into many life challenges. Nobody believed a "nobody" and also would be crazy enough to attempt for a fight for world-class semiconductor empire. So the author bit the bullet and tanked all the losses as personal fault.
+The author has been working on this project alone and has run into many life challenges. Nobody believed a "nobody" and also would be crazy enough to attempt for a fight for world-class semiconductor empire. So the author bit the bullet and tanked the losses.
 
-This silly Pong game? It's a stupid prototype. A desperate attempt to prove that this could work. To convince people that one person who have nothing to do in life but with a dream and 100+ hours within a week can make something real.
+This silly Pong game? It's a stupid prototype. A desperate attempt to prove that this could work. To convince people that one person who have nothing to do in life but with an ambition and 100+ hours within a week can make something real.
 
 **If you're interested – even just curious – I'd love to chat.**
 Connect with me on [LinkedIn](https://www.linkedin.com/in/timllh/).
