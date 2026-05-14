@@ -1,99 +1,151 @@
 ![](../../workflows/gds/badge.svg) ![](../../workflows/docs/badge.svg) ![](../../workflows/test/badge.svg) ![](../../workflows/fpga/badge.svg)
 
-# Tiny Tapeout Verilog Project
+# Tiny Tapeout Verilog Project: Distributed Computing with Pong!
 
-## Distributed Computing with Pong!
-
-**Two chips. One game. No seams.**
-
-Two chips Frankensteined together to act as one. The left chip owns the left half. The right chip owns the right half. They talk through wires and pass the ball back and forth like one seamless chip.
-
-Just like AI data centers split math across thousands of processors, these two chips split a game of Pong – passing ball physics between two screens.
-
----
-
-## How It Works
-
-| Connection State | What Happens |
-|-----------------|---------------|
-| Two chips connected | Ball flows seamlessly left ↔ right |
-| One chip alone | Ball bounces off edge like a normal wall |
-| Reconnect | Right screen ball disappears, left screen keeps playing |
-
----
-
-## Why This Matters?
-
-This is distributed computing in action – multiple computers working together on one task.
-
-**But wait, what is the different from a normal multiplayer game?**
-
-Most multiplayer games use a **server-client model** – one central server controls everything. Server dies? Game over for everyone.
-
-This works like **cryptocurrency** – completely decentralized. Both chips see the same game world and agree on what's happening, stitching their screens into one giant seamless display.
-
-- No master. No slave. No single point of failure.
-- Both chips run the exact same design. Both are equals.
-- One chip dies? The other keeps playing alone.
-- Reconnect? They rebuild the world automatically.
-- Both alive? They play together as one seamless system.
-
-**Two chips, one world. No boss. No server. Just cooperation.**
-
-Instead of one chip doing all the work, two chips split the job, share results, and keep playing – even when parts fail. This is the same principle powering massive AI chips: **parallelism**. Splitting work across many smaller processors to solve problems no single chip could handle alone.
-
-But here's the real kicker: **self-healing**. One chip dies? The other keeps playing. No crash. No reset. It just works. Reconnect the dead chip? They rebuild the world and resync instantly. No manual intervention. No restart. The system heals itself.
-
-That's fault tolerance. That's distributed computing. Pong just makes it fun to watch.
-
-**Just watch it in action!**
+### Just watch it in action!
 
 <video src="src\debug_history\checkpoint5_unstable_teleport_after_3\checkpoint5.mp4" controls width="100%">
   Your browser does not support the video tag.
 </video>
 
+### Two chips. One game. No seams.
+
+Two chips frankensteined together to act as one.
+* The left chip owns the left half.
+* The right chip owns the right half.
+
+
+They talk through wires and pass the ball back and forth like one seamless chip.
+
+Just like AI data centers split math across thousands of processors, these two chips split a game of Pong – passing ball physics between two screens.
+
+## How It Works
+
+The playing field is split cleanly across two hardware chips:
+
+*   **Left Chip:** Controls the left half of the screen.
+*   **Right Chip:** Controls the right half of the screen.
+
+
+When the ball reaches the screen boundary, the active chip passes it to the other chip, which continues the game seamlessly on its half.
+
+The ball maintains the exact same direction and speed, making the screens look like one single continuous playing field.
+
+| Connection State | Behavior |
+| --- | --- |
+| Connected | Ball flows seamlessly left ↔ right |
+| Disconnected | Ball bounces off edge like a normal wall |
+| Reconnect | Right screen ball disappears, left screen keeps playing |
+
+The chips don't just pass the ball blindly - they do a handshake to pass the ball's position and speed through the bidirectional pin with a communication protocol.
+
+* When the ball reaches to the edge of the screen, it got detected and hold the ball in place.
+
+* It records the ball physics while holding it and send a message to another chip.
+
+* If it fails to pass, it just hold until it receive, if it got disconnected, it resumes and bounces the ball as the portal collapse.
+
+* When the another chip got the message, it sends back a roger to complete the handshake move.
+
+* It renders the ball and resumes its physics in its own screen.
+
+* After sending the ball and received a rodger, it deletes the ball as the another chip got the ball.
+
+It continues moving in the same direction at the same speed, as if the screens were actually stitched to one big continuous playing field.
+
+## Why This Matters?
+
+This project demonstrates **distributed computing** in action—multiple computers working together on a single task.
+
+#### But wait, what is the difference from a normal multiplayer game?
+
+* Most multiplayer games use a **server-client model** – one central server controls everything. Server dies? Game over for everyone.
+
+* This works like **cryptocurrency** – completely decentralized. Both chips see the same game world and agree on what's happening, stitching their screens into one giant seamless display.
+
+### **The Core Principles**
+
+#### 1. True Decentralization
+* No master. No slave. No single point of failure.
+
+* Both chips run the exact same design. Both are equals.
+
+* **Two chips, one world. No boss. No server. Just cooperation.**
+
+#### 2. Parallelism (Like AI Chips)
+* Instead of one chip doing all the work, two chips split the job, share results, and keep playing—even when parts fail.
+
+* This is the same principle powering massive AI chips: splitting work across many smaller processors to solve problems no single chip could handle alone.
+
+#### 3. Self-Healing from Data Corruption
+But here's the real kicker: **self-healing**. 
+*   One chip dies? The other keeps playing alone. No crash. No reset. It just works. 
+*   Reconnect the dead chip? They rebuild the world and resync instantly. No manual intervention. No restart. The system heals itself.
+
+**That's true fault tolerance — the core of distributed computing. Pong just makes it fun to watch.**
+
+&nbsp;
+
 ## Made Possible by Tiny Tapeout
 
 This project wouldn't exist without **Tiny Tapeout** – the platform that makes chip design accessible to everyone.
 
-The author learned about chip design at an amazing workshop hosted by **Pat Deegan** at [Latch-Up 2026](https://fossi-foundation.org/latch-up/2026) – a conference dedicated to free and open source silicon ([FOSSi Foundation](https://fossi-foundation.org/)). The [Tiny Tapeout](https://tinytapeout.com/) workshop showed that anyone can design and fabricate a chip.
+### The Backstory: From Zero to Silicon
 
-Inspired by that experience, the author decided to build something wild: distributed computing on a tiny chip. A proof that parallelism and fault tolerance aren't just for AI data centers – they can run on two Frankensteined chips playing Pong.
+The author learned about chip design at an amazing workshop hosted by [Pat Deegan](https://www.youtube.com/@PsychogenicTechnologies) at [Latch-Up 2026](https://fossi-foundation.org/latch-up/2026) – a conference dedicated to free and open source silicon by ([FOSSi Foundation](https://fossi-foundation.org/)).
 
-**From zero to tapeout in 7 days.**
+The [Tiny Tapeout](https://tinytapeout.com/) workshop showed that anyone can design and fabricate a chip.
 
-**No prior chip design experience.** Just curiosity, and a stubborn belief that it could be done by a nobody, for the sake of the author's bigger end goal, Project Yeouibu: **building a world-class semiconductor empire in the most underrated smartest city in the world, Waterloo Canada, north of his favourite dorm, Columbia Lake Village (CLV) – turning it into a beacon of global innovation through a special economic zone initiative.**
-([Article about the special economic zone initiative] (https://www.linkedin.com/feed/update/urn:li:activity:7440488589068566529/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD8EX30BDpb0W0uJlx1NSad0ZRf28OHpHgE))
+* Inspired by that experience, the author decided to build something wild: distributed computing on a tiny chip. A proof that parallelism and fault tolerance aren't just for AI data centers – they can run on two crappy frankensteined chips playing Pong.
 
-**100+ hours of work, and watching the same sunrise 4 times in the last sprint of the marathon** – from workshop to taping it out
+### **From zero to tapeout in 7 days**
 
-If the author can do it, **so can you**.
+
+**No prior chip design experience.** Just curiosity, and a stubborn belief that it could be done by a nobody.
+
+For the sake of the author's bigger end goal:
+
+>**Project Yeouibu**
+>
+>* Building a world-class semiconductor empire in the most underrated smartest city in the world, Waterloo Canada
+>
+>* Turning it into a beacon of global innovation through a special economic zone initiative.
+([Article](https://www.linkedin.com/feed/update/urn:li:activity:7440488589068566529/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD8EX30BDpb0W0uJlx1NSad0ZRf28OHpHgE))
+> <br><br>
+
+### **100+ hours of work**
+
+Watching the same sunrise 4 times in the last sprint of the 1 week marathon - **from noobie workshop to tape it out**
+
+The author **self-taught** everything: 
+
+From Distributed Computing, Network Protocols, Signal Processing, Hardware Descriptive Language (HDL), Chip Design, to Game Design. Just by pure thinking!
+
+Fun to learn by doing. Fun to invent solutions from just solving the problem, no terminology, no spoiler. **All from pure reasoning**.
+
+### If the author can do it, **so can you**.
+
 
 Whether you want to build AI accelerators, distributed systems, or just play Pong across two chips – Tiny Tapeout is your starting line.
 
-**Learn. Build. Tape out.**
+### **Learn. Build. Tape out.**
 
-## Future Development
+&nbsp;
 
-This project was built in **1 week** with no prior background. The author self-taught everything: distributed computing, network protocols, signal processing, hardware design, HDL, chip design, and game engineering.
+# Future Development
 
-Many features are planned but couldn't fit due to lack of experience and time. What exists now is the bare minimum – a proof of concept. But the foundation is solid. The potential is huge.
+#### Many features are planned but couldn't fit due to lack of experience and time. What exists now is the bare minimum – a proof of concept. But the foundation is solid. The potential is huge.
 
-**Fun to learn by doing. Fun to invent solutions from pure thinking.**
 
-## Planned Features
-
-## Scalable Network Chaining with Consensus
+## 1. Scalable Network Chaining with Consensus
 
 The current design supports two chips. The next evolution: **connect as many chips as you want**.
 
 With 8 bidirectional pins, ball and connection status can be condensed into the UART protocol. Each chip can be designed and optimized to talk to all its neighbors using 4 pairs of UART pins.
 
----
+### Network Topology in TinyTapeOut
 
-## Network Topology in TinyTapeOut
-
-<img src="TT07 demoboard.jpg" width="100%" alt="Manufactured TinyTapeOut development board">
+<img src="TT07demoboard.jpg" width="100%" alt="Manufactured TinyTapeOut development board">
 
 With 8 bidirectional pins, each chip can talk to all its neighbors using 4 pairs of UART pins. Each chip builds its local network map based on which pin numbers are connected. By summing the connection numbers reported by its neighbors, each chip calculates a **vote**. These votes are broadcast to everyone, allowing the network to assign unique IDs and build a global map.
 
@@ -153,10 +205,11 @@ Each chip broadcasts its vote. All chips collect every vote and sort them:
 
 ### The Global Map
 
+
 Now every chip knows:
-- Who it is connected to
-- What its neighbors are connected to
-- Its position in the local network based on the voted sum
+1. Who it is connected to
+2. What its neighbors are connected to
+3. Its position in the local network based on the voted sum
 
 When a chip gets disconnected, it can simply repeat the voting process and re-identify itself and its local network following the connection rule as a global source of truth, or just reseated from its missing slot of the local network map for a simplier route.
 
@@ -164,14 +217,9 @@ Player could also optimize all of the voting combination to fit more than 5 chip
 
 **Add more chips. Build a wall. Make a stadium. The game grows with your hardware.**
 
-## ICBM Mechanics
+## 2. ICBM Mechanics
 
 After the infrastructure is done, the next thing is to make the game fun!
-
-[Author inspiration of deadly cross from playing maplestory](https://www.youtube.com/watch?v=rvdWpjRZVUQ&t=148s)
-<video src="MapleStoryClip.mp4" controls width="100%">
-  Your browser does not support the video tag.
-</video>
 
 As the author spent hefty time and heavily inspired by Maplestory and GregTech (Minecraft mod about real-life industrial processes), the author has been thinking about building a game out of that concept. The next feature: player controls a jet with its own maneuver mechanics. Player can shoot ICBMs with a cooldown to another player's local map through the physics transfer demonstrated in this Pong prototype.
 
@@ -181,81 +229,130 @@ If an ICBM is destroyed by another ICBM not originating from that space, it trig
 
 However, based on the current minimal proof-of-concept code, it already occupies 2 tile spaces from Tiny Tapeout. Implementation is unlikely – the author believes this is enough to demonstrate the distributed computing concept.
 
-## Beyond a Silly Game: The Future of Chip-to-Chip Communication
+&nbsp;
+
+# Beyond a Silly Game: The Future of Chip-to-Chip Communication
 
 Distributed computing relies heavily on chip-to-chip communication. The current bottleneck for AI/data center chips is **power** and the **shoreline** – the physical edge where massive amounts of parallel data enter and exit the chip.
 
-In this game, interconnect between chips is demonstrated through jumper wires between bidirectional pins on a PMOD socket. In real modern chips, they use tiny copper wires or optical transceivers to route data – but this has already reached its physical limit.
+In this game, interconnect between chips is demonstrated through jumper wires between bidirectional pins on a PMOD socket. In real modern chips, the high-speed data paths rely on ultra-fine copper traces or optical transceivers to route data – but this has already reached its physical limit.
 
----
+### Where the Industry Is Today
 
-### Industry Landscape & Motivations
+To minimize the physical distance between computation and communication, the industry is transitioning toward Co-Packaged Optics (CPO), which integrates optical routing components directly into the chip package.
 
-<img src="Co-Packaged Optics.jpg" width="100%" alt="Co-Packaging Optics Transition">
+<img src="Co-PackagedOptics.jpg" width="100%" alt="Co-Packaging Optics Transition">
 
 *Source: "Co-Packaged Optics for our Connected Future." YouTube, uploaded by [Microelectronics], 2024. [Video]. Available: https://www.youtube.com/watch?v=Xt-GY8Pkt6g*
 
-<img src="Co-Packaged Optics2.webp" width="100%" alt="Co-Packaging Optics Roadmap">
+<img src="Co-PackagedOptics2.webp" width="100%" alt="Co-Packaging Optics Roadmap">
 
 *Source: Chang, Y.H. "Co-Packaged Optics (CPO) 2026-2036: Technologies, Market, and Forecasts." IDTechEx, 2025. [Report]. Available: https://www.idtechex.com/en/research-report/co-packaged-optics-cpo/1138*
 
----
+The architectural roadmap is clear: **Pluggable modules → ASIC → Direct Substrate Integration**
 
-### The Next Frontier: Sub-TeraHz Interconnect
+### The Problem: Neither Copper Nor VCSEL Scales to Sub-TeraHz
 
-To jump to the next generation of data transfer rates (sub-TeraHz frequencies), paths must be further shrunk, and new physics mechanisms must be implemented.
+To achieve sub-TeraHz data rates, we must evaluate the limitations of the two dominant interconnect technologies used today.
 
-<img src="Copper vs Optics.webp" width="100%" alt="Copper vs Optics Comparison">
+<img src="CoppervsOptics.webp" width="100%" alt="Copper vs Optics Comparison">
 
 *Source: Blackburn, C. "The 400G-Per-Lane Inflection Point: Where Copper and Optical Meet in AI Infrastructure." Astera Labs, 2024. [White paper]. Available: https://www.asteralabs.com/the-400g-per-lane-inflection-point-where-copper-and-optical-meet-in-ai-infrastructure/*
 
-**The copper problem:**
-- Signal degrades through AC skin effect
-- Severe resistive heating prevents further miniaturization
-- Physically capped at 400G/lane
+While copper is a cost-effective and reliable solution for short-reach signaling, it hits a rigid physical wall between 400G and 800G per lane, rendering it incapable of supporting sub-TeraHz frequencies. Beyond these speeds, signal quality degrades exponentially due to the AC skin effect, As current becomes confined to this thin outer layer, microscopic surface roughness forces it to travel a longer effective path, significantly increasing AC resistance.
 
-**The optical solution:**
-If anyone wants to build the next generation of interconnect, photonics is not an option – it becomes a **necessity**.
+Even worse, once the signal leaves the die, the plastic packaging and circuit board materials absorb high-frequency energy and turn it into heat. At sub-TeraHz speeds, the wires themselves act like a filter that kills the signal, or worse, like antennas that broadcast noise everywhere. This is why optical fibers are so attractive: light has no electrical charge, so signals don't interfere with each other. Copper simply cannot go faster without burning too much power, needing complex electronics, or turning into a radio transmitter.
 
-<img src="Broadcom NPO.png" width="100%" alt="Broadcom VCSEL NPO Architecture">
+**VCSELs** (Vertical-Cavity Surface-Emitting Lasers) are the industry standard for optical transceivers. They convert electricity to light using tiny lasers embedded in the chip. But this approach has deep flaws. While VCSELs is highly reliable within hot-swappable pluggable modules, integrating VCSELs directly onto a high-performance compute substrate introduces single-point-of-failure vulnerabilities; a single laser failure ruins the entire multi-thousand-dollar ASIC package, causing unacceptable system downtime.
 
-*Source: Broadcom Inc. "Beyond the Copper Wall: Scaling AI Clusters with VCSEL-Based Near-Package Optics (NPO)." Broadcom Blog, 2024. Available: https://www.broadcom.com/blog/beyond-the-copper-wall-scaling-ai-clusters-with-vcsel-based-near-package-optics-npo*
+Furthermore, direct modulation of VCSELs causes severe wavelength chirp and suffers from fundamental RC parasitic bottlenecks. This restricts them to binary or basic PAM4 signaling, capping single-lane speeds well below the sub-TeraHz data rates required by next-generation links. Structurally, because VCSELs consist of alternating, planar Distributed Bragg Reflector (DBR) mirrors grown parallel to the substrate, they emit light vertically. This vertical profile prevents them from cleanly coupling into flat, planar photonic waveguides without complex, high-loss 90-degree turning mirrors. This geometric mismatch, combined with their inability to support high-density Wavelength Division Multiplexing (WDM) in a single bus waveguide, establishes VCSELs as an inadequate, short-range intermediate solution.
 
-The industry currently uses VCSELs (Vertical-Cavity Surface-Emitting Lasers) for optical transceivers – arrays of lasers and photodetectors mounted on a chip. However:
+<img src="BroadcomNPO.png" width="100%" alt="Broadcom VCSEL NPO Architecture">
 
-- Laser physics requires tight thermal management and suffers from stability issues
-- Laser dead time, hard reliability limits, and short lifespan
-- Single laser failure → entire optical channel lost → whole chip requires replacement
-- Monochrome laser with binary On/Off limits parallelism in single bus waveguide
-- Undeployable for next-generation sub-TeraHz data transfer
+*Source: Broadcom Inc. "Beyond the Copper Wall: Scaling AI Clusters with VCSEL-Based Near-Package Optics." 2024.*
 
----
+If anyone wants to build the next generation of interconnect, photonics is not an option – it becomes a necessity. But VCSELs are not the answer.
 
-### The Author's Research
+# The Author's Research
 
-Current technological evolution is moving from:
-- **Pluggable modules → ASIC → direct substrate integration (Co-Packaging Technology)**
+This project went from a workshop concept to final tapeout in a single, intense one‑week sprint from nothing. Far from an end goal, this milestone represents a beginning. It let the author get hands-on experience building optical communication, from simple jumper wires to photonics, with the ultimate goal of building a substrate-level optical transceiver capable of **revamping the backbone of chip communication.**
 
-<img src="Microring Resonator Optical Transceiver.png" width="100%" alt="Microring Resonator Optical Transceiver Design">
+Instead of embedding lasers inside the chip, my research moves the light source **off-chip** using an **external frequency comb** delivers light to the substrate via **photonic wire bonding**. The optical signal is then routed directly to an on-chip array of **Microring Resonators** (MRRs), which are made of **non-linear optical materials** like **Thin Film Lithium Niobate (TFLN)** and **Barium Titanate Oxide (BTO)** - explained in the process.
+
+<img src="MicroringResonatorOpticalTransceiver.png" width="100%" alt="Microring Resonator Optical Transceiver Design">
 
 *Source: Saiham, D., Wu, D., & Rahman, S. "Leveraging photonic interconnects for scalable and efficient fully homomorphic encryption." arXiv preprint arXiv:2506.12962, Jun. 2025. DOI: 10.48550/arXiv.2506.12962. Available: https://arxiv.org/abs/2506.12962*
 
-This evolution aims to solve power and bandwidth bottlenecks. The author is researching and proposing a solution using **nonlinear optical materials** for ultra-fast modulation through electro-opto-electro conversion via the **Pockels effect**, coupled with **athermal materials**.
+#### The Physics: Why Pockels Effect Beats Laser Modulation
 
-With novel materials like **Thin Film Lithium Niobate (TFLN)** and **Barium Titanate Oxide (BTO)**, the author believes this design could overcome most hard limits of existing approaches. The fabrication capability for these materials is currently extremely limited, representing both a challenge and an opportunity.
+Traditional VCSELs work by turning a laser on and off as fast as possible. But switching a laser on and off has hard limits – it is slow, generates heat, and eventually cannot go any faster.
 
-The author argues that developing a vertically integrated **electronic-photonic integrated circuit (EPIC)** fab is a worthwhile investment in today's technology landscape, as these architectures gain increasing attention in both academia and industry.
+This design takes a completely different approach. It uses **evanescent coupling** between MRRs to capture the optical signal from the bus waveguide through resonance. The ring is designed to be exactly the right size so that light of a specific wavelength resonates inside it, bouncing around thousands of times.
+
+When the ring resonates, it traps that wavelength. Light does not pass through the bus waveguide, representing an "off" state.
+
+To modulate this signal, a localized voltage is applied across the ring's non-linear optical cladding. This triggers the linear electro-optic (Pockels) effect, which instantaneously alters the material's refractive index. Changing the refractive index alters the effective optical path length of the ring. This shifts the microring's resonance frequency away from the laser’s wavelength, breaking the coupling condition. The light no longer enters the ring and instead travels unhindered down the bus waveguide — representing an "on" state.
+
+The key is that this voltage-driven index change happens in **picoseconds** – a thousand times faster than a nanosecond. Pure electrical control of light, ready to be exploited to develop the next generation of optical transceivers.
+
+This is the breakthrough that enables sub‑TeraHz modulation.
+
+#### The Design: External Frequency Comb + MRR Array
+
+Instead of embedding lasers on-chip, a single external frequency comb produces many wavelengths simultaneously. Here is how it works.
+
+1. Injection: the frequency comb injects a C‑band (capable of long-distance transfer) with regularly spaced spectral lines into a single bus waveguide via photonic wirebonding. Each discrete spectral line serves as an independent data channel.
+
+2. Modulation: an array of MRRs sits alongside the shared waveguide, with each individual ring tuned to resonate with one specific wavelength from the comb. When no voltage is applied, the MRR resonates at that frequency and blocks the light – a logical 0. When voltage is applied to trigger the Pockels effect, the resonance frequency shifts and light passes through – a logical 1.
+
+3. Parallel Multiplexing: The independently modulated, multi-coloured data channels travel concurrently down the single, shared waveguide across the chip, board, or server rack.
+
+4. Demodulation: A matching receiver array of MRRs, paired with integrated high-speed photodetectors, filters and reads each wavelength channel in parallel.
+
+**By leveraging the Pockels effect, the resonance frequency shifts deliberately to mismatch the optical channel wavelength – allowing transmission. This enables signals to be densely packed within a single bus waveguide, unlocking parallel, low-latency data routing across chips, boards, and racks.**
+
+#### The Materials: TFLN and BTO
+
+For the photonic layer of the MRR array, the industry have been developing two kind of nonlinear optical materials.
+
+**Thin Film Lithium Niobate (TFLN)** is mature, silicon‑compatible, and thermally conductive. It has an excellent Pockels coefficient and helps remove heat from the CMOS driver.
+
+**Barium Titanate Oxide (BTO)** While still primarily in the research and development phase, BTO offers a significantly higher Pockels coefficient than TFLN, delivering unmatched energy efficiency for electro-optic conversion.
+
+Both are excellent candidates for sub‑THz communication. The fabrication challenge, specifically etching uniformity and high-quality thin-film deposition remain persistent. But that is the opportunity, not the obstacle.
+
+#### Integration: Photonic Layer on CMOS BEOL
+
+The photonic layer is wafer‑bonded directly to the Back‑End‑of‑Line (BEOL) of the CMOS driver/receiver die. This integration achieves several things.
+
+The non-linear photonic layer is wafer-bonded directly to the Back-End-of-Line (BEOL) layers of the CMOS driver and receiver die. This monolithic integration achieves several critical design goals:
+
+Thermal Isolation: Thermal energy from the primary light source never enters the compute die, confining on-chip thermal dissipation strictly to the CMOS logic itself—which is further mitigated by TFLN’s high thermal conductivity.
+
+Zero Laser Dead-Time: – The laser stays on continuously. No waiting for it to turn on and off. Switching happens entirely through voltage, not laser cycling.
+
+Elimination of Single-Point Failures: Shifting the active laser cavities off-chip ensures the multi-wavelength comb source remains entirely hot-swappable and field-replaceable.
+
+True Optical Parallelism: Multiple optical channels signal propagate simultaneously through a single waveguide. Because the routing architecture relies entirely on passive evanescent coupling inside a microring rather than destructive electrical manipulation, the multi-wavelength bus waveguide can be routed freely across the system architecture without significant risk of signal degradation or of material breakdown.
+
+### The Vision
+
+This design delivers **superior communication infrastructure** compared to VCSEL and pure electrical signaling.
+
+A vertically integrated **Electronic‑Photonic Integrated Circuit (EPIC)** fab is a worthwhile investment in today's technology landscape. These architectures are gaining increasing attention in both academia and industry – and they represent the only path forward for sub‑TeraHz data transfer.
+
+**From jumper wires to light. From one chip to many. The next step is ours to build.**
+
+### Author's Current Task list
 
 | Task | Status |
 |------|--------|
-| Simulation and optimization of optical channel density for MRR array cascaded in a single bus waveguide with improved athermal ability (balancing thermal optic effects) | Stalled |
-| CAD fabrication process in Onshape for 7nm CMOS FinFET technology | Stalled |
-| DRAM development (co-developing while contributing to game development for [SuperSymmetry](https://susymodpack.substack.com/p/3-circuit-overhaul)) | Work in Progress |
-| Complete circuit design flow for a proposed EPIC chip | Planned |
-| Develop minimal viable layout schematics for MRR Photonics Stack on CMOS BEOL with active thermal control | Planned |
-| [**2026 Chipathon**](https://sscs.ieee.org/technical-committees/tc-ose/sscs-pico-design-contest/) – Winning Chipathon with an open-source cleanroom particle detector | Current next task |
-
-*The Chipathon is an open-source IC design contest hosted by the IEEE Solid-State Circuits Society (SSCS) under the PICO program. The 2026 theme is “Build It. Test It. Publish It.” Participants work in teams through a structured five-phase flow, from onboarding to tapeout, with the option to publish results. The contest is open to anyone worldwide, with mentorship provided. – [Source](https://sscs.ieee.org/technical-committees/tc-ose/sscs-pico-design-contest/)*
+| Athermal MRR Array Simulation and Optimization | On Hold |
+| 7nm CMOS FinFET Process CAD Modeling | On Hold |
+| DRAM Process CAD Modeling (Co-Developing In-Game DRAM Process Recipes for [SuperSymmetry](https://susymodpack.substack.com/p/3-circuit-overhaul)) | Work in Progress |
+| Complete Circuit Design for the EPIC | On Hold |
+| Develop Minimal Viable Layout Schematics of the EPIC | On Hold |
+| [**2026 Chipathon**](https://sscs.ieee.org/technical-committees/tc-ose/sscs-pico-design-contest/) | Current next task |
 
 ### This Project as Distributed Computing Proof-of-Concept
 

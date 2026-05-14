@@ -5,8 +5,8 @@
 
 `default_nettype none
 `include "config.vh"
-`include "hvsync_generator.v"
-`include "uart.v"
+//`include "hvsync_generator.v"
+//`include "uart.v"
 
 /* verilator lint_off UNUSEDSIGNAL */
 
