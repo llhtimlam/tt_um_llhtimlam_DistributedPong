@@ -212,7 +212,7 @@ When a chip gets disconnected, it can simply repeat the voting process and re-id
 
 Player could also optimize all of the voting combination to fit more than 5 chips, left as a logic exercise for the player if they have more than 5 players. The author would be impressed if anyone manages to gather so many people to play it.
 
-But this voting mechanism is not just for games. The same logic — chips voting to agree on a shared state — is just a miniature version of how distributed consensus powers real-world systems: missile flight control, particle accelerators, and AI data centers. Whether passing a ball, a data packet, or a payload, the principles of trust, verification, and redundancy remain the same.
+But this voting mechanism is not just for games. The same logic — chips voting to agree on a shared state — is just a miniature version of how distributed consensus powers real-world systems: missile flight control, particle related processes, and AI data centers. Whether passing a ball, a data packet, or a payload, the principles of trust, verification, and redundancy remain the same.
 
 ## 2. ICBM Mechanics
 
