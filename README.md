@@ -93,7 +93,7 @@ The author learned about chip design at an amazing workshop hosted by [Pat Deega
 
 The [Tiny Tapeout](https://tinytapeout.com/) workshop showed that anyone can design and fabricate a chip.
 
-* Inspired by that experience, the author decided to build something wild: distributed computing on a tiny chip. A proof that parallelism and fault tolerance aren't just for AI data centers – they can run on two crappy frankensteined chips playing Pong.
+* Inspired by that experience and [TinyTPU](https://www.tinytpu.com/) showcase in [Socratica](https://socratica.info/) [Symposium 2026](https://symposium.socratica.info/), the author decided to build something wild: distributed computing on a tiny chip. A proof that parallelism and fault tolerance aren't just for AI data centers – they can run on two crappy frankensteined chips playing Pong.
 
 ### **From zero to tapeout in 7 days**
 
@@ -683,6 +683,10 @@ As part of the author's ongoing game development work for [SuperSymmetry](https:
 <details>
 <summary><b>In-Game DRAM Fabrication Process Flow</b></summary>
 
+<img src="DRAMDoddle.jpg" width="100%" alt="DRAM Doddle">
+
+> Process speculation on the DRAM fabrication process of DDR3 in the early 2010 era of CMOS Technology
+
 **FEOL (Si Island)**
 
 1. p‑dope wafer
@@ -699,18 +703,18 @@ As part of the author's ongoing game development work for [SuperSymmetry](https:
 
 **MEOL (Plug and Bit Line)**
 
-1. Nickel salicide process
+1. Cobalt salicide process
 2. Pattern plug position
-3. SiO₂ interlayer filling deposition (silicon_dioxide.teos)
+3. BPSG interlayer filling deposition
 4. Plug formation
 5. Pattern bitline wiring
-6. SiO₂ interlayer filling deposition (silicon_dioxide.teos)
+6. SiOCH interlayer filling deposition
 7. ALD SiN spacer (etch back)
 8. Ti/TiN/W deposit bit line
 9. Metal etch back
 10. Cover bitline with SiN (pattern to leave hole for bit line escape to BEOL)
 11. Continue plug formation: pattern plug position
-12. SiO₂ interlayer filling deposition (silicon_dioxide.teos)
+12. SiOCH interlayer filling deposition
 13. Plug formation
 14. CMP
 
@@ -732,7 +736,7 @@ As part of the author's ongoing game development work for [SuperSymmetry](https:
 14. Short pulse laser rapid thermal annealing for Ge drive‑in
 15. CMP
 16. Pattern MIM cylinder and wiring
-17. SiO₂ interlayer filling deposition
+17. SiOCH interlayer filling deposition
 18. Plug formation for wiring
 19. CMP
 
