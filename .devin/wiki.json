@@ -1,0 +1,17 @@
+{
+  "repo_notes": [
+    {
+      "content": "FORCE REGENERATION: The previous wiki index is stale. Completely overwrite all existing wiki pages and analyze the newest code commits in the repository."
+    }
+  ],
+  "pages": [
+    {
+      "title": "Architecture Overview",
+      "purpose": "Document the overall system structure, data flow, and primary folder dependencies.",
+      "page_notes": [
+        "Document the brand new system structure and components added in the latest commits.",
+        "Ensure all newly added modules in the main code directory are highlighted."
+      ]
+    }
+  ]
+}

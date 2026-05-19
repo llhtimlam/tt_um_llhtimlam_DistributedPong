@@ -36,7 +36,7 @@ The first chip then deletes its copy of the ball. This handshake happens so fast
 
 | Connection State | Behavior |
 | --- | --- |
-| Connected | Ball flows seamlessly left ↔ right |
+| Connected | Ball passes seamlessly left ↔ right |
 | Disconnected | Ball bounces off edge like a normal wall |
 | Reconnect | Right screen ball disappears, left screen keeps playing |
 
@@ -212,9 +212,7 @@ When a chip gets disconnected, it can simply repeat the voting process and re-id
 
 Player could also optimize all of the voting combination to fit more than 5 chips, left as a logic exercise for the player if they have more than 5 players. The author would be impressed if anyone manages to gather so many people to play it.
 
-**Add more chips. Build a wall. Make a stadium. The game grows with your hardware.**
-
-The voting mechanism described above is not just a game mechanic — it is a miniature version of how distributed consensus powers real-world systems: missile flight control, particle-related processes, and AI data centers. The same principles of trust, verification, and redundancy apply whether you are passing a ball or a payload.
+But this voting mechanism is not just for games. The same logic — chips voting to agree on a shared state — is just a miniature version of how distributed consensus powers real-world systems: missile flight control, particle related processes, and AI data centers. Whether passing a ball, a data packet, or a payload, the principles of trust, verification, and redundancy remain the same.
 
 ## 2. ICBM Mechanics
 
@@ -268,9 +266,9 @@ To overcome these constraints, the industry is transitioning toward **Co-Package
 
 The architectural roadmap is clear: **Pluggable modules → ASIC → Direct Substrate Integration**
 
-### The Problem: Neither Copper Nor VCSEL Scales to Sub-TeraHz
+### The Problem: Neither Copper Nor VCSEL Scales to Sub-THz
 
-To achieve sub-TeraHz data rates, we must evaluate the limitations of the two dominant interconnect technologies used today.
+To achieve sub-THz data rates, we must evaluate the limitations of the two dominant interconnect technologies used today.
 
 <img src="CoppervsOptics.webp" width="100%" alt="Copper vs Optics in Data Center">
 
@@ -283,9 +281,9 @@ To achieve sub-TeraHz data rates, we must evaluate the limitations of the two do
 > Copper vs Optics, image [*source*](https://photoncap.net/p/pc101-lecture-1-why-silicon-photonics) [4]
 
 
-While copper is a cost-effective and reliable solution for short-reach signaling, it hits a rigid physical wall at **400G per lane** [3], rendering it incapable of supporting sub-TeraHz frequencies. **Beyond 200G per lane, signal quality degrades exponentially** due to the AC skin effect, As current becomes confined to this thin outer layer, microscopic surface roughness forces it to travel a longer effective path, significantly increasing AC resistance [5].
+While copper is a cost-effective and reliable solution for short-reach signaling, it hits a rigid physical wall at **400G per lane** [3], rendering it incapable of supporting sub-THz frequencies. **Beyond 200G per lane, signal quality degrades exponentially** due to the AC skin effect, As current becomes confined to this thin outer layer, microscopic surface roughness forces it to travel a longer effective path, significantly increasing AC resistance [5].
 
-Even worse, once the signal leaves the die, the plastic packaging and circuit board materials absorb high-frequency energy and turn it into **heat**. At sub-TeraHz speeds, the wires themselves **act like a filter that kills the signal**, or worse, like antennas that broadcast noise everywhere [6]. This is why optical fibers are so attractive: **light has no electrical charge, so signals don't interfere with each other. Copper simply cannot go faster without burning too much power**, needing complex electronics, or turning into a radio transmitter.
+Even worse, once the signal leaves the die, the plastic packaging and circuit board materials absorb high-frequency energy and turn it into **heat**. At sub-THz speeds, the wires themselves **act like a filter that kills the signal**, or worse, like antennas that broadcast noise everywhere [6]. This is why optical fibers are so attractive: **light has no electrical charge, so signals don't interfere with each other. Copper simply cannot go faster without burning too much power**, needing complex electronics, or turning into a radio transmitter.
 
 ## VCSEL
 
@@ -311,7 +309,7 @@ Furthermore, the process of direct modulation introduces severe performance bott
 
 Worse, the physical design required to build these vertical lasers introduces a fundamental RC parasitic bottleneck that prevents fast switching. To bounce light vertically, VCSELs require dozens of alternating, planar Distributed Bragg Reflector (DBR) mirror layers grown parallel to the substrate. Forcing the modulation current to flow vertically through these numerous material interfaces creates high internal series resistance. Simultaneously, to make the laser efficient, the current must be squeezed through a microscopic oxide confinement aperture. Sandwiching this thin insulating oxide layer between highly conductive p-type and n-type semiconductor regions creates a parallel-plate structure that traps a massive amount of parasitic capacitance.
 
-In short, VCSEL suffer **severe wavelength chirp** and **RC parasitic bottlenecks** from their fundamental physics [11], forming a structural low-pass filter that rounds off sharp digital pulses. This restricts them to binary or basic PAM4 signaling, capping single-lane speeds in **200Gb/s PAM4** [12], well below the sub-TeraHz data rates required by next-generation links. Structurally, because VCSELs consist of alternating, planar DBR mirrors grown parallel to the substrate, they emit light vertically. This vertical profile prevents them from cleanly coupling into flat, planar photonic waveguides without complex, high-loss 90-degree turning mirrors. This geometric mismatch, combined with their **inability to support high-density Wavelength Division Multiplexing (WDM) in a single bus waveguide** [13], establishes VCSELs as an **inadequate, short range solution**.
+In short, VCSEL suffer **severe wavelength chirp** and **RC parasitic bottlenecks** from their fundamental physics [11], forming a structural low-pass filter that rounds off sharp digital pulses. This restricts them to binary or basic PAM4 signaling, capping single-lane speeds in **200Gb/s PAM4** [12], well below the sub-THz data rates required by next-generation links. Structurally, because VCSELs consist of alternating, planar DBR mirrors grown parallel to the substrate, they emit light vertically. This vertical profile prevents them from cleanly coupling into flat, planar photonic waveguides without complex, high-loss 90-degree turning mirrors. This geometric mismatch, combined with their **inability to support high-density Wavelength Division Multiplexing (WDM) in a single bus waveguide** [13], establishes VCSELs as an **inadequate, short range solution**.
 
 **If anyone wants to build the next generation of interconnect, photonics is not an option – it becomes a necessity. But VCSELs are not the answer.**
 
@@ -609,7 +607,7 @@ The system operates as a fully bidirectional optical link:
 
 * Both chips' PMOD sockets interface with external drivers and transimpedance amplifiers (TIAs)
 * Custom PICs with TX/RX MRR arrays connect via wire bonding
-* Each PIC receives an independent frequency comb injection
+* Multiple wavelength channels are coupled into each PIC via a grating coupler, providing bidirectional optical channels on the same bus waveguide
 
 **Wavelength allocation example:**
 
@@ -652,13 +650,13 @@ However, as of the current date of writing, **no commercial foundry offers verti
 <details>
 <summary>Click to expand</summary>
 
-The author has been working on this project alone and has run into many life issues. Nobody believed a "nobody" and also would be crazy enough to attempt for a fight for world-class semiconductor empire. So the author just bite the bullet and see how far it go until getting lost in the street.
+The author has been working on this project alone and has run into many life issues. Nobody believed a "nobody" and also would be crazy enough to attempt for a fight for world-class semiconductor empire. So the author just bite the bullet and see how far it goes until getting lost in the street.
 
 This silly Pong game? It's a stupid prototype. A desperate attempt to prove that this could work. To convince people that one person who is incompatible with life can churn out something real from 100+ hours within a week with no food, water, and sleep.
 
-The goal of this paper serves as a yeouibu for his project to proceed as the technical part is always easier than the human part. The author have been in a hard time to talk and work with human for his whole life and could not bruteforce a fix on it. The author just do whatever he can do to bruteforce the part he can manage, the technical part. If the author have this project going 3 years ago before his birthday when he was bleak, it might just fix all of his life problem. But now as the golden era is in the past. The author will just take whatever it takes from nothing to force its way out.
+The goal of this paper serves as a yeouibu for his project to proceed, as the technical part is always easier than the human part. The author has had a hard time talking and working with humans his entire life and could not brute-force a fix for it. The author just does whatever he can to brute-force the part he can manage. If the author had gotten this project going 3 years ago before his birthday when he was bleak, it might have fixed all of his life's problems. But now, the golden era is in the past. The author will just take whatever it takes from nothing to force its way out.
 
-As there is only slim chance to get any working hand, plus the author doesn't know how to build functional team without establishing codependency for requesting everyone 24 hr of time of attention and focus, the project assumption is based on author solo all the way to the end without any external help. This project and the author have been inspired by maplestory, [gregtech](https://greglore.miraheze.org/wiki/Main_Page), breaking bad, [hackerfab](https://docs.hackerfab.org/home), tower of god, and Dr. Semiconductor's fab in a shed [video](https://www.youtube.com/watch?v=HfSO-LCKmrA). As a desperate attempt on how can one man with nothing but himself able to get out under a rock to reach into the deity realm. It is the ultimate manifestation of what happens when a socially contained group with nothing to do with life transgresses out to wreak havoc on the meta. In a quest for pursuing knowledge of the universe, the author have been crusaded by a board of professor in a department meeting risking his graduation when author trying to audit every course available in the university with 400+ annoying spam email just try to fully utilizing university resources during covid.
+As there is only a slim chance of getting any working hands, and the author doesn't know how to build a functional team without establishing a codependency that involves 24-hour attention, the project assumption is based on the author going solo all the way to the end without any external help. This project and the author have been inspired by maplestory, [gregtech](https://greglore.miraheze.org/wiki/Main_Page), breaking bad, [hackerfab](https://docs.hackerfab.org/home), tower of god, and Dr. Semiconductor's fab in a shed [video](https://www.youtube.com/watch?v=HfSO-LCKmrA). As a desperate attempt at how one man with nothing but himself is able to get out under a rock to reach into the deity realm. It is the ultimate manifestation of what happens when a socially contained group with nothing to do with life transgresses out to wreak havoc on the meta. In a quest to pursue knowledge of the universe, the author was crusaded by a board of professor in a department meeting, risking his graduation when author was trying to audit every course available in the university with 400+ annoying spam emails, just try to fully utilizing university resources during covid.
 </details>
 
 **If you're interested – even just curious – I'd love to chat.**
@@ -764,21 +762,21 @@ As part of the author's ongoing game development work for [SuperSymmetry](https:
 
 4. S. Park, "[PC101] Lecture 1: Why 'Silicon Photonics' Now? (The Next Fabless Revolution)," *PhotonCap*, Jan. 19, 2026. [Online]. Available: [PhotonCap](https://photoncap.net/p/pc101-lecture-1-why-silicon-photonics)
 
-5. F. Alawneh, "Futuring Interconnect Infrastructure for AI: RF Transmission over Plastic Cable Surpasses Copper and Optics at Terabit Scale," Signal Integrity Journal, June 2024. [Online]. Available: [Signal Integrity Journal](https://www.signalintegrityjournal.com/articles/4011-futuring-interconnect-infrastructure-for-ai-rf-transmission-over-plastic-cable-surpasses-copper-and-optics-at-terabit-scale)
+5. F. Alawneh, "Futuring Interconnect Infrastructure for AI: RF Transmission over Plastic Cable Surpasses Copper and Optics at Terabit Scale," *Signal Integrity Journal*, June 2024. [Online]. Available: [Signal Integrity Journal](https://www.signalintegrityjournal.com/articles/4011-futuring-interconnect-infrastructure-for-ai-rf-transmission-over-plastic-cable-surpasses-copper-and-optics-at-terabit-scale)
 
-6. X. Zhou, L. Zhang, and T. Wang, "Co-Design of Thermal and RF Performance in a Stacked Sub-THz Antenna-in-Package With Embedded Endfire Arrays," IEEE Transactions on Components, Packaging and Manufacturing Technology, vol. 16, no. 2, pp. 210-219, Feb. 2026. doi: [10.1109/TMTT.2025.3619939](https://doi.org/10.1109/TMTT.2025.3619939)
+6. X. Zhou, L. Zhang, and T. Wang, "Co-Design of Thermal and RF Performance in a Stacked Sub-THz Antenna-in-Package With Embedded Endfire Arrays," *IEEE Transactions on Components, Packaging and Manufacturing Technology*, vol. 16, no. 2, pp. 210-219, Feb. 2026. doi: [10.1109/TMTT.2025.3619939](https://doi.org/10.1109/TMTT.2025.3619939)
 
 7. "What Is VCSEL?," Hangzhou Brandnew Technology Co., Ltd., Apr. 2024. [Online]. Available: [Hangzhou Brandnew Technology](https://www.brandnewdiode.com/news/what-is-vcsel-77140908.html)
 
-8. "The VCSEL Advantage: Increased Power, Efficiency, and Reliability," Photonics Spectra, Photonics Media, 2025. [Online]. Available: [Photonics Media](https://www.photonics.com/Articles/The-VCSEL-Advantage-Increased-Power-Efficiency/a25102)
+8. "The VCSEL Advantage: Increased Power, Efficiency, and Reliability," *Photonics Spectra*, Photonics Media, 2025. [Online]. Available: [Photonics Media](https://www.photonics.com/Articles/The-VCSEL-Advantage-Increased-Power-Efficiency/a25102)
 
 9. Broadcom Inc., "Beyond the Copper Wall: Scaling AI Clusters with VCSEL-Based Near-Package Optics (NPO)," Broadcom Blog, 2024. [Online]. Available: [Broadcom](https://www.broadcom.com/blog/beyond-the-copper-wall-scaling-ai-clusters-with-vcsel-based-near-package-optics-npo-)
 
 10. "VCSEL Principles and Future Trends Explained," InPhenix Knowledge Base, Dec. 2025. [Online]. Available: [InPhenix Knowledge Base](https://inphenix.com/vcsel-vertical-cavity-surface-emitting-laser-principles-advantages-applications-and-future-trends/)
 
-11. Irrational Analysis, "Practical Datacom Lasers," Irrational Analysis Substack, Jan. 24, 2026. [Online]. Available: [Irrational Analysis](https://irrationalanalysis.substack.com/p/practical-datacom-lasers)
+11. Irrational Analysis, "Practical Datacom Lasers," *Irrational Analysis Substack*, Jan. 24, 2026. [Online]. Available: [Irrational Analysis](https://irrationalanalysis.substack.com/p/practical-datacom-lasers)
 
-12. F. Koyama, H. Ibrahim, A. Hassan, and X. Gu, "Pushing the limits of VCSEL technology: >200 Gb/s 1060-nm single-mode VCSEL array for next-generation SMF/MMF interconnects," in Proc. SPIE PC13911, Vertical-Cavity Surface-Emitting Lasers XXX, PC1391107, Mar. 2026. doi: [10.1117/12.3089572](https://doi.org/10.1117/12.3089572)
+12. F. Koyama et al., "Pushing the limits of VCSEL technology: >200 Gb/s 1060-nm single-mode VCSEL array for next-generation SMF/MMF interconnects," in Proc. SPIE PC13911, Vertical-Cavity Surface-Emitting Lasers XXX, PC1391107, Mar. 2026. doi: [10.1117/12.3089572](https://doi.org/10.1117/12.3089572)
 
 13. M. Karppinen, "VCSEL Techniques for Wavelength-Multiplexed Optical Interconnects," Chalmers University of Technology, Gothenburg, Sweden, Tech. Rep. 511930, 2024. [Online]. Available: [Chalmers University of Technology](https://research.chalmers.se/publication/511930)
 
@@ -786,7 +784,7 @@ As part of the author's ongoing game development work for [SuperSymmetry](https:
 
 15. imec, "Next-generation silicon photonics," *imec International*. [Online]. Available: [imec International](https://www.imec-int.com/en/next-generation-silicon-photonics)
 
-16. D. Saiham, D. Wu, and S. Rahman, "Leveraging photonic interconnects for scalable and efficient fully homomorphic encryption," arXiv preprint arXiv:2506.12962, 2025. [Online]. Available: [arXiv](https://arxiv.org/abs/2506.12962)
+16. D. Saiham, D. Wu, and S. Rahman, "Leveraging photonic interconnects for scalable and efficient fully homomorphic encryption," *arXiv:2506.12962*, 2025. [Online]. Available: [arXiv](https://arxiv.org/abs/2506.12962)
 
 17. National Research Council of Science and Technology, "Optical frequency comb integration transforms absolute distance measurement precision," *Phys.org*, Jul. 23, 2025. [Online]. Available: [Phys.org](https://phys.org/news/2025-07-optical-frequency-absolute-distance-precision.html)
 
@@ -796,13 +794,13 @@ As part of the author's ongoing game development work for [SuperSymmetry](https:
 
 20. N. Lindenmann et al., "Photonic wire bonding: a novel concept for chip-scale interconnects," *Optics Express*, vol. 20, no. 16, pp. 17667–17677, Jul. 30, 2012, doi: [10.1364/OE.20.017667](https://doi.org/10.1364/OE.20.017667)
 
-21. S. Yu, Q. Du, P. T. Do, and M. S. Jang, "Two-photon lithography for integrated photonic packaging," *Light: Advanced Manufacturing*, vol. 4, no. 4, pp. 486–502, 2023, doi: [10.37188/lam.2023.032](https://doi.org/10.37188/lam.2023.032)
+21. S. Yu et al., "Two-photon lithography for integrated photonic packaging," *Light: Advanced Manufacturing*, vol. 4, no. 4, pp. 486–502, 2023, doi: [10.37188/lam.2023.032](https://doi.org/10.37188/lam.2023.032)
 
 22. C. A. A. Franken et al., "High-power and narrow-linewidth laser on thin-film lithium niobate enabled by photonic wire bonding," *APL Photonics*, vol. 10, no. 2, p. 026107, Feb. 2025, doi: [10.1063/5.0231827](https://doi.org/10.1063/5.0231827)
 
 23. Intel Corporation, "Intel Labs announces integrated photonics research advancement," *Business Wire*, Jun. 28, 2022. [Online]. Available: [Intel](https://www.intc.com/news-events/press-releases/detail/1555/intel-labs-announces-integrated-photonics-research)
 
-24. D. G. Rabus, Integrated Ring Resonators: The Compendium, Springer Series in Optical Sciences, vol. 127. Berlin, Heidelberg: Springer, 2007. [Online]. Available: [Springer](https://link.springer.com/book/10.1007/978-3-540-68788-7)
+24. D. G. Rabus, *Integrated Ring Resonators: The Compendium*, Springer Series in Optical Sciences, vol. 127. Berlin, Heidelberg: Springer, 2007. [Online]. Available: [Springer](https://link.springer.com/book/10.1007/978-3-540-68788-7)
 
 25. "Silicon Photonics Micro-Ring Resonators," YouTube, 2021. [Online Video]. Available: [Youtube](https://www.youtube.com/watch?v=4O-1CJx4s4w)
 
@@ -814,9 +812,9 @@ As part of the author's ongoing game development work for [SuperSymmetry](https:
 
 29. W. Bogaerts et al., "Silicon microring resonators," *Laser & Photonics Reviews*, vol. 6, no. 1, pp. 47–73, Jan. 2012, doi: [10.1002/lpor.201100017](https://doi.org/10.1002/lpor.201100017)
 
-30. Y. Wen, H. Chen, Z. Wu, W. Li, and Y. Zhang, "Fabrication and photonic applications of Si-integrated LiNbO3 and BaTiO3 ferroelectric thin films," APL Materials, vol. 12, no. 2, p. 020601, Feb. 2024. doi: 10.1063/5.0192018. [Online]. Available: [APL Materials](https://pubs.aip.org/aip/apm/article/12/2/020601/3262490/Fabrication-and-photonic-applications-of-Si)
+30. Y. Wen et al., "Fabrication and photonic applications of Si-integrated LiNbO3 and BaTiO3 ferroelectric thin films," *APL Materials*, vol. 12, no. 2, p. 020601, Feb. 2024. doi: [10.1063/5.0192018](https://doi.org/10.1063/5.0192018)
 
-31. R. W. Boyd, Nonlinear Optics, 4th ed. Burlington, MA, USA: Academic Press, 2020.
+31. R. W. Boyd, *Nonlinear Optics*, 4th ed. Burlington, MA, USA: Academic Press, 2020.
 
 32. M. R. Chowdhury, G. E. Peckham, R. T. Ross, and D. H. Saunderson, "Lattice dynamics of lithium niobate," *J. Phys. C: Solid State Phys.*, vol. 7, no. 6, pp. L99–L102, Mar. 1974. [Online]. Available: [IOPScience](https://beta.iopscience.iop.org/article/10.1088/0022-3719/7/6/001/meta)
 
@@ -824,9 +822,9 @@ As part of the author's ongoing game development work for [SuperSymmetry](https:
 
 34. D. Chelladurai et al., "Barium titanate and lithium niobate permittivity and Pockels coefficients from megahertz to sub-terahertz frequencies," *Nature Materials*, vol. 24, no. 6, pp. 868–875, Jun. 2025, doi: [10.1038/s41563-025-02158-1](https://doi.org/10.1038/s41563-025-02158-1)
 
-35. K. K. S. Multani, J. F. Herrmann, and A. H. Safavi-Naeini, "Integrated sub-terahertz cavity electro-optic transduction," *arXiv preprint arXiv:2504.01920*, Apr. 2025. [Online]. Available: [arXiv](https://arxiv.org/abs/2504.01920)
+35. K. K. S. Multani, J. F. Herrmann, and A. H. Safavi-Naeini, "Integrated sub-terahertz cavity electro-optic transduction," *arXiv:2504.01920*, Apr. 2025. [Online]. Available: [arXiv](https://arxiv.org/abs/2504.01920)
 
-36. F. Eltes et al., "Thin-film BTO-based modulators enabling 200 Gb/s data rates with sub 1 Vpp drive signal," in *Optical Fiber Communication Conference (OFC) 2023*, San Diego, CA, USA, 2023, paper Th4A.2, doi: [10.1364/OFC.2023.Th4A.2](https://doi.org/10.1364/OFC.2023.Th4A.2)
+36. F. Eltes et al., "Thin-film BTO-based modulators enabling 200 Gb/s data rates with sub 1 Vpp drive signal," in Optical Fiber Communication Conference (OFC) 2023, San Diego, CA, USA, 2023, paper Th4A.2, doi: [10.1364/OFC.2023.Th4A.2](https://doi.org/10.1364/OFC.2023.Th4A.2)
 
 37. C. Han et al., "Slow light silicon modulator beyond 110 GHz bandwidth," *Optica*, vol. 12, no. 2, pp. 203–210, Feb. 2025. [Online]. Available: [Optica](https://opg.optica.org/optica/fulltext.cfm?uri=optica-12-2-203&id=564123)
 
@@ -834,7 +832,7 @@ As part of the author's ongoing game development work for [SuperSymmetry](https:
 
 39. C. Wang et al., "Integrated lithium niobate electro-optic modulators operating at CMOS-compatible voltages," *Nature*, vol. 562, pp. 101–104, Sep. 2018, doi: [10.1038/s41586-018-0551-y](https://doi.org/10.1038/s41586-018-0551-y)
 
-40. J. Ling, Y. He, R. Luo, M. Li, H. Liang, and Q. Lin, "Athermal lithium niobate microresonator," Optics Express, vol. 28, no. 15, pp. 21682-21691, Jul. 2020. [Online]. Available: doi: [10.1364/OE.398363](https://doi.org/10.1364/OE.398363)
+40. J. Ling, Y. He, R. Luo, M. Li, H. Liang, and Q. Lin, "Athermal lithium niobate microresonator," *Optics Express*, vol. 28, no. 15, pp. 21682-21691, Jul. 2020. doi: [10.1364/OE.398363](https://doi.org/10.1364/OE.398363)
 
 41. Y. K. Verma, S. Kumari, G. Bawa, and S. M. Tripathi, "Temperature insensitive large free spectral range micro‑ring resonator," *Optical and Quantum Electronics*, vol. 54, no. 12, p. 789, Dec. 2022, doi: [10.1007/s11082-022-04192-4](https://doi.org/10.1007/s11082-022-04192-4)
 
@@ -844,25 +842,25 @@ As part of the author's ongoing game development work for [SuperSymmetry](https:
 
 44. H. Han et al., "Cryogenic thermo-optic thin-film lithium niobate modulator with an NbN superconducting heater," *Chinese Optics Letters*, vol. 21, no. 8, p. 081301, Aug. 2023, doi: [10.3788/COL202321.081301](https://doi.org/10.3788/COL202321.081301)
 
-45. Y. Li, M. Sun, T. Miao, and J. Chen, "Towards High-Performance Pockels Effect-Based Modulators: Review and Projections," Micromachines, vol. 15, no. 7, p. 865, Jun. 2024. doi : [10.3390/mi15070865](https://doi.org/10.3390/mi15070865)
+45. Y. Li et al., "Towards High-Performance Pockels Effect-Based Modulators: Review and Projections," *Micromachines*, vol. 15, no. 7, p. 865, Jun. 2024. doi: [10.3390/mi15070865](https://doi.org/10.3390/mi15070865)
 
-46. Q. Lin et al., "Versatile tunning of compact microring waveguide resonator based on lithium niobate thin films," *Photonics*, vol. 10, no. 4, p. 424, Apr. 2023, doi: [10.3390/photonics10040424](https://doi.org/10.3390/photonics10040424).
+46. Q. Lin et al., "Versatile tunning of compact microring waveguide resonator based on lithium niobate thin films," *Photonics*, vol. 10, no. 4, p. 424, Apr. 2023, doi: [10.3390/photonics10040424](https://doi.org/10.3390/photonics10040424)
 
-47. "Advances in lithium niobate photonics: Development status and perspectives," *Advances in Photonics*, vol. 4, no. 3, p. 034003, 2022, doi: [10.1117/1.AP.4.3.034003](https://doi.org/10.1117/1.AP.4.3.034003).
+47. "Advances in lithium niobate photonics: Development status and perspectives," *Advances in Photonics*, vol. 4, no. 3, p. 034003, 2022, doi: [10.1117/1.AP.4.3.034003](https://doi.org/10.1117/1.AP.4.3.034003)
 
-48. A. Negi et al., "Thickness-dependent thermal conductivity and phonon mean free path distribution in single-crystalline barium titanate," *Advanced Science*, vol. 10, no. 19, p. 2301273, Apr. 2023, doi: [10.1002/advs.202301273](https://doi.org/10.1002/advs.202301273).
+48. A. Negi et al., "Thickness-dependent thermal conductivity and phonon mean free path distribution in single-crystalline barium titanate," *Advanced Science*, vol. 10, no. 19, p. 2301273, Apr. 2023, doi: [10.1002/advs.202301273](https://doi.org/10.1002/advs.202301273)
 
-49. H. Han, J. Wang, Z. Wang, C. Liu, and B. Xiang, "Integrated barium titanate electro-optic modulators operating at CMOS-compatible voltage," *Applied Optics*, vol. 62, no. 22, pp. 6053–6059, Jul. 2023, doi: [10.1364/AO.499065](https://doi.org/10.1364/AO.499065).
+49. H. Han et al., "Integrated barium titanate electro-optic modulators operating at CMOS-compatible voltage," *Applied Optics*, vol. 62, no. 22, pp. 6053–6059, Jul. 2023, doi: [10.1364/AO.499065](https://doi.org/10.1364/AO.499065)
 
-50. "Veeco and imec develop 300mm-compatible process to enable integration of barium titanate on silicon," *imec*, [Online]. Available: [imec](https://www.imec-int.com/en/press/veeco-and-imec-develop-300mm-compatible-process-enable-integration-barium-titanate-silicon)
+50. "Veeco and imec develop 300mm-compatible process to enable integration of barium titanate on silicon," imec, Jan. 27, 2026. [Online]. Available: [imec](https://www.imec-int.com/en/press/veeco-and-imec-develop-300mm-compatible-process-enable-integration-barium-titanate-silicon)
 
-51. "Wafer scale TFLN platform exhibiting 0.1 dB/cm single mode propagation loss," in *2025 IEEE Silicon Photonics Conference*, San Francisco, CA, USA, Mar. 30–Apr. 3, 2025. [Online]. Available: [ieee](https://ieeexplore.ieee.org/document/11046825)
+51. "Wafer scale TFLN platform exhibiting 0.1 dB/cm single mode propagation loss," in 2025 IEEE Silicon Photonics Conference, San Francisco, CA, USA, Mar. 30–Apr. 3, 2025. [Online]. Available: [ieee](https://ieeexplore.ieee.org/document/11046825)
 
-52. G. I. Kim et al., "Low loss monolithic barium titanate on insulator integrated photonics with intrinsic quality factor >1 million," *arXiv preprint arXiv:2507.17150*, Jul. 2025. [Online]. Available: [arXiv](https://arxiv.org/abs/2507.17150)
+52. G. I. Kim et al., "Low loss monolithic barium titanate on insulator integrated photonics with intrinsic quality factor >1 million," *arXiv:2507.17150*, Jul. 2025. [Online]. Available: [arXiv](https://arxiv.org/abs/2507.17150)
 
 53. "CCRAFT foundry launches to commercialise TFLN chips," *Photonic Integrated Circuits (PIC) Magazine*, May 16, 2025. [Online]. Available: [Photonic Integrated Circuits (PIC) Magazine](https://picmagazine.net/article/121763/CCRAFT_foundry_launches_to_commercialise_TFLN_chips)
 
-54. "HyperLight, UMC, and Wavetek announce strategic partnership for high-volume foundry production of TFLN Chiplet™ platform," *Nasdaq*, Mar. 10, 2026. [Online]. Available: [Nasdaq](https://www.nasdaq.com/press-release/hyperlight-umc-and-wavetek-announce-strategic-partnership-high-volume-foundry)
+54. "HyperLight, UMC, and Wavetek announce strategic partnership for high-volume foundry production of TFLN Chiplet™ platform," Nasdaq, Mar. 10, 2026. [Online]. Available: [Nasdaq](https://www.nasdaq.com/press-release/hyperlight-umc-and-wavetek-announce-strategic-partnership-high-volume-foundry)
 
 55. Lightium AG, "European-Canadian Consortium INGENIOUS Secures Funding for €7.6M Project to Integrate Lasers and Detectors Into Next-Gen TFLN PICs," Oct. 14, 2025. [Online]. Available: [Lightium](https://lightium.com/european-canadian-consortium-ingenious-secures-funding-for-e-7-6m-project-to-integrate-lasers-and-detectors-into-next-gen-tfln-pics/)
 
@@ -870,7 +868,7 @@ As part of the author's ongoing game development work for [SuperSymmetry](https:
 
 57. Z. Li et al., "Heterogeneous integration of amorphous silicon carbide on thin film lithium niobate," *arXiv:2407.09350*, Jul. 2024. [Online]. Available: [arXiv](https://arxiv.org/abs/2407.09350)
 
-58. "Argon plasma inductively coupled plasma reactive ion etching study for smooth sidewall thin film lithium niobate waveguide application," *Optical Materials*, vol. 53, pp. 1-5, Mar. 2016, doi: [10.1016/j.optmat.2015.12.040](https://doi.org/10.1016/j.optmat.2015.12.040)
+58. G. Ulliac et al., "Argon plasma inductively coupled plasma reactive ion etching study for smooth sidewall thin film lithium niobate waveguide application," *Optical Materials*, vol. 53, pp. 1-5, Mar. 2016, doi: [10.1016/j.optmat.2015.12.040](https://doi.org/10.1016/j.optmat.2015.12.040)
 
 59.  California Institute of Technology, "Atomic layer etching of MgO-doped lithium niobate using sequential exposures of H2 and SF6/argon plasmas," U.S. Patent Application 18/908317, Apr. 10, 2025. [Online]. Available: [Free Patent Online](https://www.freepatentsonline.com/y2025/0120318.html)
 
@@ -878,7 +876,7 @@ As part of the author's ongoing game development work for [SuperSymmetry](https:
 
 61. H. Kim et al., "Crystal domain orientation control of epitaxial BaTiO3 films integrated on silicon for large electro-optic response," *Applied Physics Letters*, vol. 127, no. 5, Aug. 2025, doi: [10.1063/5.0281487](https://doi.org/10.1063/5.0281487)
 
-62. S. A. Amin, A. Kumar, and M. K. Singh, "OFF-axis RF-sputtered barium titanate thin films for next-generation electro-optic devices," J. Phys.: Condens. Matter, vol. 35, no. 25, p. 255301, Jun. 2023. [Online]. Available: [IOPScience](https://iopscience.iop.org/article/10.1088/2515-7639/ae0ef0)
+62. S. A. Amin, A. Kumar, and M. K. Singh, "OFF-axis RF-sputtered barium titanate thin films for next-generation electro-optic devices," *J. Phys.: Condens. Matter*, vol. 35, no. 25, p. 255301, Jun. 2023. [Online]. Available: [IOPScience](https://iopscience.iop.org/article/10.1088/2515-7639/ae0ef0)
 
 63. "The fascinating relationship between photonics and electronics: Photonic and electronic circuits," *Photonics Report*, Dec. 17, 2024. [Online]. Available: [Photonics Report](https://photonicsreport.com/blog/the-fascinating-relationship-between-photonics-and-electronics/)
 
