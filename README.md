@@ -662,6 +662,9 @@ However, as of the current date of writing, **no commercial foundry offers verti
 **If you're interested – even just curious – I'd love to chat.**
 Connect with me on [LinkedIn](https://www.linkedin.com/in/timllh/).
 
+**If you're interested – even just curious – I'd love to chat.**
+Connect with me on [LinkedIn](https://www.linkedin.com/in/timllh/).
+
 #### Related Work: In-Game Semiconductor Fabrication
 
 As part of the author's ongoing game development work for [SuperSymmetry](https://susymodpack.substack.com/p/3-circuit-overhaul), a detailed [thyristor](https://github.com/SymmetricDevs/Supersymmetry/pull/1851/changes) and DRAM process flow has been designed to simulate semiconductor manufacturing within the game environment. This process flow, while incomplete and unreviewed, represents an ongoing effort to model realistic semiconductor fabrication within a game context, paralleling the author's research into EPIC manufacturing.
