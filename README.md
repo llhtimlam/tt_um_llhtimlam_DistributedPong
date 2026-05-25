@@ -2,7 +2,19 @@
 
 ![](../../workflows/gds/badge.svg) ![](../../workflows/docs/badge.svg) ![](../../workflows/test/badge.svg) ![](../../workflows/fpga/badge.svg)
 
-# Tiny Tapeout Verilog Project: Distributed Computing with Pong!
+### **Tiny Tapeout Verilog Project**:
+# Distributed Computing with Pong!
+
+### Two chips. One game. No seams.
+
+Two chips frankensteined together to act as one.
+* The left chip owns the left half of the screen.
+* The right chip owns the right half.
+
+
+They talk through wires and pass the ball back and forth like one seamless chip.
+
+Just like AI data centers split math across thousands of processors, these two chips split a game of Pong – passing ball physics between two screens.
 
 ### Just watch it in action!
 
@@ -13,16 +25,7 @@
 <video src="https://github.com/user-attachments/assets/5f583adb-5bea-4dd4-957a-cdc12cdf7bfc" controls="controls" width="100%">
 </video>
 
-### Two chips. One game. No seams.
-
-Two chips frankensteined together to act as one.
-* The left chip owns the left half.
-* The right chip owns the right half.
-
-
-They talk through wires and pass the ball back and forth like one seamless chip.
-
-Just like AI data centers split math across thousands of processors, these two chips split a game of Pong – passing ball physics between two screens.
+### Scoll down for more details!
 
 ## How It Works
 
@@ -93,7 +96,7 @@ The author learned about chip design at an amazing workshop hosted by [Pat Deega
 
 The [Tiny Tapeout](https://tinytapeout.com/) workshop showed that anyone can design and fabricate a chip.
 
-* Inspired by that experience and [TinyTPU](https://www.tinytpu.com/) showcase in [Socratica](https://socratica.info/) [Symposium 2026](https://symposium.socratica.info/), the author decided to build something wild: distributed computing on a tiny chip. A proof that parallelism and fault tolerance aren't just for AI data centers – they can run on two crappy frankensteined chips playing Pong.
+* Inspired by that experience and [TinyTPU](https://www.tinytpu.com/)'s showcase at the [Socratica](https://socratica.info/) [Symposium 2026](https://symposium.socratica.info/), the author decided to build something wild: distributed computing on a tiny chip. A proof that parallelism and fault tolerance are not just for AI data centers – they can run on two crappy frankensteined chips playing Pong.
 
 ### **From zero to tapeout in 7 days**
 
@@ -125,7 +128,7 @@ Fun to learn by doing. Fun to invent solutions from just solving the problem, no
 
 Whether you want to build AI accelerators, distributed systems, or just play Pong across two chips – Tiny Tapeout is your starting line.
 
-### **Learn. Build. Tape out.**
+### **Build It. Test It. Publish It.**
 
 &nbsp;
 
@@ -644,45 +647,35 @@ As AI accelerators and datacenters demand ever-greater bandwidth, photonic inter
 However, as of the current date of writing, **no commercial foundry offers vertically integrated fabrication of advanced CMOS logic with nonlinear electro-optic materials**. TFLN is produced in specialized photonics foundries or as separate chiplets [53-55], while BTO remains research‑exclusive with no commercial production‑compatible solution available [50]. Realizing this architecture therefore requires building a dedicated fab capable of heterogeneous integration with tight photonic-electronic alignment and iterative process development, enabling scalable, high-performance optical interconnects from chip-to-chip to rack-scale. Pioneering such a facility establishes a practical pathway to sub‑THz data transfer, reduces time-to-experiment for new designs, accelerates prototype cycles, and is why these architectures are attracting growing attention in both academia and industry.
 
 ---
-
-### A Word from the Author
-
-<details>
-<summary>Click to expand</summary>
-
-The author has been working on this project alone and has run into many life issues. Nobody believed a "nobody" and also would be crazy enough to attempt for a fight for world-class semiconductor empire. So the author just bite the bullet and see how far it goes until getting lost in the street.
-
-This silly Pong game? It's a stupid prototype. A desperate attempt to prove that this could work. To convince people that one person who is incompatible with life can churn out something real from 100+ hours within a week with no food, water, and sleep.
-
-The goal of this paper serves as a yeouibu for his project to proceed, as the technical part is always easier than the human part. The author has had a hard time talking and working with humans his entire life and could not brute-force a fix for it. The author just does whatever he can to brute-force the part he can manage. If the author had gotten this project going 3 years ago before his birthday when he was bleak, it might have fixed all of his life's problems. But now, the golden era is in the past. The author will just take whatever it takes from nothing to force its way out.
-
-As there is only a slim chance of getting any working hands, and the author doesn't know how to build a functional team without establishing a codependency that involves 24-hour attention, the project assumption is based on the author going solo all the way to the end without any external help. This project and the author have been inspired by maplestory, [gregtech](https://greglore.miraheze.org/wiki/Main_Page), breaking bad, [hackerfab](https://docs.hackerfab.org/home), tower of god, and Dr. Semiconductor's fab in a shed [video](https://www.youtube.com/watch?v=HfSO-LCKmrA). As a desperate attempt at how one man with nothing but himself is able to get out under a rock to reach into the deity realm. It is the ultimate manifestation of what happens when a socially contained group with nothing to do with life transgresses out to wreak havoc on the meta. In a quest to pursue knowledge of the universe, the author was crusaded by a board of professor in a department meeting, risking his graduation when author was trying to audit every course available in the university with 400+ annoying spam emails, just try to fully utilizing university resources during covid.
-</details>
-
-**If you're interested – even just curious – I'd love to chat.**
-Connect with me on [LinkedIn](https://www.linkedin.com/in/timllh/).
-
 #### Author's Current Task list
 
 | Task | Status |
 |------|--------|
-| Athermal MRR Array Simulation and Component Integration Optimization | On Hold |
-| 7nm CMOS FinFET Process [CAD Modeling](https://cad.onshape.com/documents/391d1465c77e409ce11d0542/w/4c1477bce20b74aae019f360/e/4d678d38a66ef595b6668804) | On Hold |
+| [**2026 Chipathon**](https://sscs.ieee.org/technical-committees/tc-ose/sscs-pico-design-contest/): [Open-source custom ASIC for optical probe station](https://github.com/sscs-ose/sscs-chipathon-2026/issues/40) | Work in Progress |
 | DRAM Process [CAD Modeling](https://cad.onshape.com/documents/a5bdfe7155a9c30d78a06951/w/7497dcf7f196195f860859c6/e/57f4ddbb05d26e6cae023db0?renderMode=0&uiState=6a0695b865762f18dd10f743) (Co-Developing In-Game DRAM Process Recipes for [SuperSymmetry](https://susymodpack.substack.com/p/3-circuit-overhaul)) | Work in Progress |
+| 7nm CMOS FinFET Process [CAD Modeling](https://cad.onshape.com/documents/391d1465c77e409ce11d0542/w/4c1477bce20b74aae019f360/e/4d678d38a66ef595b6668804) | On Hold |
+| Athermal MRR Array Simulation and Component Integration Optimization | On Hold |
 | Complete Circuit Design for the EPIC | On Hold |
 | Develop Minimal Viable Layout Schematics of the EPIC | On Hold |
 | DIY Silicon photonic interconnect with Hackerfab process | Ideation |
-| [**2026 Chipathon**](https://sscs.ieee.org/technical-committees/tc-ose/sscs-pico-design-contest/) | Current next task |
+
+**If you're interested – even just curious – I'd love to chat.**
+Connect with me on [LinkedIn](https://www.linkedin.com/in/timllh/).
 
 #### Related Work: In-Game Semiconductor Fabrication
 
 As part of the author's ongoing game development work for [SuperSymmetry](https://susymodpack.substack.com/p/3-circuit-overhaul), a detailed [thyristor](https://github.com/SymmetricDevs/Supersymmetry/pull/1851/changes) and DRAM process flow has been designed to simulate semiconductor manufacturing within the game environment. This process flow, while incomplete and unreviewed, represents an ongoing effort to model realistic semiconductor fabrication within a game context, paralleling the author's research into EPIC manufacturing.
 
 <details>
-<summary><b>In-Game DRAM Fabrication Process Flow</b></summary>
+<summary><b>Draft for the In-Game DRAM Fabrication Process Flow (not updated)</b></summary>
+
+&nbsp;
+
+> Disclaimer: As the author is still refining the fabrication process, some steps have been omitted or are subject to modification. A complete, finalized process flow will be formally released following the CAD modeling of the 45nm DRAM 6F² DDR3 structure.
 
 <img src="DRAMDoddle1.jpg" width="100%" alt="DRAM Doddle 1">
 <img src="DRAMDoddle2.jpg" width="100%" alt="DRAM Doddle 2">
+<img src="DRAMDoddle3.jpg" width="100%" alt="DRAM Doddle 2">
 
 > Process speculation on the DRAM fabrication process of DDR3 in the early 2010 era of CMOS Technology
 
