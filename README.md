@@ -22,8 +22,13 @@ Just like AI data centers split math across thousands of processors, these two c
 </video>
 <video src="https://github.com/user-attachments/assets/e9ea9dbf-cc86-4f69-a1a8-7cf9f02c17e4" controls="controls" width="100%">
 </video>
+
+> Older version for stitching two screen in one monitor
+
 <video src="https://github.com/user-attachments/assets/5f583adb-5bea-4dd4-957a-cdc12cdf7bfc" controls="controls" width="100%">
 </video>
+
+> New version with seperate monitor for each chips
 
 ### Scoll down for more details!
 
@@ -296,7 +301,7 @@ Even worse, once the signal leaves the die, the plastic packaging and circuit bo
 
 **VCSELs** (Vertical-Cavity Surface-Emitting Lasers) are the industry standard for optical transceivers. They convert electricity to light using tiny lasers embedded in the chip. But this approach has deep flaws.
 
-**While VCSELs is highly reliable within hot-swappable pluggable modules** [8], integrating VCSELs directly onto a high-performance compute substrate introduces **significant architectural vulnerabilities**. A single laser failure ruins the entire multi-thousand-dollar ASIC package, bricking the entire computation module and cause unacceptable system downtime. Because of this fatal manufacturing and deployment risk**, next-generation infrastructure roadmaps stop short of placing VCSELs directly on the processor die. Instead, **architects keep these optical arrays isolated at the near-ASIC or Near-Package Optics (NPO) boundary** [9].
+**While VCSELs is highly reliable within hot-swappable pluggable modules** [8], integrating VCSELs directly onto a high-performance compute substrate introduces **significant architectural vulnerabilities**. A single laser failure ruins the entire multi-thousand-dollar ASIC package, bricking the entire computation module and cause unacceptable system downtime. Because of this fatal manufacturing and deployment risk, next-generation infrastructure roadmaps stop short of placing VCSELs directly on the processor die. Instead, **architects keep these optical arrays isolated at the near-ASIC or Near-Package Optics (NPO) boundary** [9].
 
 <img src="BroadcomNPO.jpg" width="100%" alt="Broadcom VCSEL NPO Architecture">
 
@@ -659,8 +664,6 @@ However, as of the current date of writing, **no commercial foundry offers verti
 | Develop Minimal Viable Layout Schematics of the EPIC | On Hold |
 | DIY Silicon photonic interconnect with Hackerfab process | Ideation |
 
-**If you're interested – even just curious – I'd love to chat.**
-Connect with me on [LinkedIn](https://www.linkedin.com/in/timllh/).
 
 **If you're interested – even just curious – I'd love to chat.**
 Connect with me on [LinkedIn](https://www.linkedin.com/in/timllh/).
