@@ -656,8 +656,8 @@ However, as of the current date of writing, **no commercial foundry offers verti
 
 | Task | Status |
 |------|--------|
-| [**2026 Chipathon**](https://sscs.ieee.org/technical-committees/tc-ose/sscs-pico-design-contest/): [Open-source custom ASIC for optical probe station](https://github.com/sscs-ose/sscs-chipathon-2026/issues/40) | Work in Progress |
-| DRAM Process [CAD Modeling](https://cad.onshape.com/documents/a5bdfe7155a9c30d78a06951/w/7497dcf7f196195f860859c6/e/57f4ddbb05d26e6cae023db0?renderMode=0&uiState=6a0695b865762f18dd10f743) (Co-Developing In-Game DRAM Process Recipes for [SuperSymmetry](https://susymodpack.substack.com/p/3-circuit-overhaul)) | Work in Progress |
+| [**2026 Chipathon**](https://sscs.ieee.org/technical-committees/tc-ose/sscs-pico-design-contest/): [Open-source custom ASIC for optical probe station](https://github.com/sscs-ose/sscs-chipathon-2026/issues/40) | [Work in Progress](https://github.com/llhtimlam/Probton) |
+| DRAM Process [CAD Modeling](https://cad.onshape.com/documents/a5bdfe7155a9c30d78a06951/w/7497dcf7f196195f860859c6/e/57f4ddbb05d26e6cae023db0?renderMode=0&uiState=6a0695b865762f18dd10f743) (Co-Developing In-Game DRAM Process Recipes for [SuperSymmetry](https://susymodpack.substack.com/p/3-circuit-overhaul)) | [Work in Progress](https://github.com/llhtimlam/Supersymmetry/commit/93a8c6eb573d6f742c666e4f742ad2683bb138ef) |
 | 7nm CMOS FinFET Process [CAD Modeling](https://cad.onshape.com/documents/391d1465c77e409ce11d0542/w/4c1477bce20b74aae019f360/e/4d678d38a66ef595b6668804) | On Hold |
 | Athermal MRR Array Simulation and Component Integration Optimization | On Hold |
 | Complete Circuit Design for the EPIC | On Hold |
@@ -678,6 +678,9 @@ As part of the author's ongoing game development work for [SuperSymmetry](https:
 &nbsp;
 
 > Disclaimer: As the author is still refining the fabrication process, some steps have been omitted or are subject to modification. A complete, finalized process flow will be formally released following the CAD modeling of the 45nm DRAM 6F² DDR3 structure.
+
+> Update: [DRAM process](https://github.com/llhtimlam/Supersymmetry/commit/93a8c6eb573d6f742c666e4f742ad2683bb138ef) is now referenced in H. Xiao, *3D IC Devices, Technologies, and Manufacturing.* Bellingham, WA, USA: SPIE Press, 2016. However, process below is not updated.
+
 
 <img src="DRAMDoddle1.jpg" width="100%" alt="DRAM Doddle 1">
 <img src="DRAMDoddle2.jpg" width="100%" alt="DRAM Doddle 2">

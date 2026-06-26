@@ -8,7 +8,7 @@ wsl --install
 Open your **WSL Terminal** and run the following commands to install the compiler, Verilator, and SDL2 graphics libraries:
 ```
 sudo apt update
-sudo apt install -y build-essential verilator libsdl2
+sudo apt install -y build-essential verilator libsdl2-dev
 ```
 
 ## 3. Run simulation

@@ -20,12 +20,12 @@ cd /mnt/c/Users/Username/PathToHere
 
 # Compile Verilog and C++ wrapper with SDL2 flags
 ```
-verilator -I. -cc project.v --exe main.cpp -o vga_sim -CFLAGS "$(sdl2-config --cflags)" -LDFLAGS "$(sdl2-config --libs)"
+verilator -I. -cc tt_um_vga_example.v --exe main.cpp -o vga_sim -CFLAGS "$(sdl2-config --cflags)" -LDFLAGS "$(sdl2-config --libs)"
 ```
 
 # Build the executable binary
 ```
-make -C ./obj_dir -f Vproject.mk
+make -C ./obj_dir -f Vtt_um_vga_example.mk
 ```
 
 # Launch the graphical VGA simulation
